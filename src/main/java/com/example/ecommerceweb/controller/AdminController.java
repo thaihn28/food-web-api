@@ -17,6 +17,7 @@ import java.util.Optional;
 // 2 session: Category and Product
 
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
     @Autowired
     CategoryService categoryService;
@@ -24,18 +25,18 @@ public class AdminController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/admin")
+    @GetMapping("/")
     public String adminHome(){
         return "adminHome";
     }
 
-    @GetMapping("/admin/categories")
+    @GetMapping("/categories")
     public String getCategory(Model model){
         model.addAttribute("categories", categoryService.getAllCategory());
         return "categories";
     }
 
-    @GetMapping("/admin/categories/add")
+    @GetMapping("/categories/add")
     public String addCategory(Model model){
         Category category = new Category();
         model.addAttribute("category" , category);
@@ -43,7 +44,7 @@ public class AdminController {
         return "categoriesAdd";
     }
 
-    @PostMapping("/admin/categories/add")
+    @PostMapping("/categories/add")
     public String saveCategory(@RequestParam(value = "id", required = false) Long id, @ModelAttribute("category") Category category, RedirectAttributes ra ){
         categoryService.addCategory(category);
 
@@ -56,14 +57,14 @@ public class AdminController {
         return "redirect:/admin/categories";
     }
 
-    @GetMapping("/admin/categories/delete/{id}")
+    @GetMapping("/categories/delete/{id}")
     public String deleteCategoryById(@PathVariable(value = "id") Long id, RedirectAttributes ra){
         categoryService.deleteCategoryById(id);
         ra.addFlashAttribute("msg", "Deleted successfully");
         return "redirect:/admin/categories";
     }
 
-    @GetMapping("/admin/categories/update/{id}")
+    @GetMapping("/categories/update/{id}")
     public String updateCategoryById(@PathVariable(value = "id") Long id, Model model){
         try {
             Category category = categoryService.getCategoryById(id);
@@ -78,13 +79,13 @@ public class AdminController {
 
     // Product sessions
 
-    @GetMapping("/admin/products")
+    @GetMapping("/products")
     public String viewAllProduct(Model model){
         model.addAttribute("products", productService.getAllProduct());
         return "products";
     }
 
-    @GetMapping("/admin/products/add")
+    @GetMapping("/products/add")
     public String addProduct(Model model){
         ProductDTO productDTO = new ProductDTO();
         model.addAttribute("productDTO", productDTO);
@@ -92,7 +93,7 @@ public class AdminController {
         return "productsAdd";
     }
 
-    @PostMapping("/admin/products/add")
+    @PostMapping("/products/add")
     public String saveProduct(@ModelAttribute("productDTO") Product product, Model model){
         productService.addProduct(product);
         model.addAttribute("categories", categoryService.getAllCategory());
