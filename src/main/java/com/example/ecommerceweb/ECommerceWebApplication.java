@@ -9,7 +9,7 @@ public class ECommerceWebApplication {
     public static void main(String[] args) {
         SpringApplication.run(ECommerceWebApplication.class, args);
         System.out.println("Out");
-        System.out.println("Thằng thái béo");
+        System.out.println("Bruhhh");
     }
 
 }
