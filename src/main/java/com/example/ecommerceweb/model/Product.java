@@ -4,6 +4,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "products")
