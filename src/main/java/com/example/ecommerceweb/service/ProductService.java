@@ -33,6 +33,6 @@ public class ProductService {
         throw new UserNotFoundException("Could not find any product with id" + id);
     }
     public List<Product> getAllProductsByCategoryId(int id){
-        return productRepository.findAllByCategory_Id(id);
+        return productRepository.findAllByCategoryId(id);
     }
 }

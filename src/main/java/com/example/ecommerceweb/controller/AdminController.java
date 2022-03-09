@@ -3,7 +3,6 @@ package com.example.ecommerceweb.controller;
 import com.example.ecommerceweb.dto.ProductDTO;
 import com.example.ecommerceweb.model.Category;
 import com.example.ecommerceweb.model.Product;
-import com.example.ecommerceweb.repository.ProductRepository;
 import com.example.ecommerceweb.service.CategoryService;
 import com.example.ecommerceweb.service.ProductService;
 import com.example.ecommerceweb.service.UserNotFoundException;
@@ -18,7 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
+import java.util.List;
 
 // 2 session: Category and Product
 
@@ -41,15 +40,14 @@ public class AdminController {
     }
 
     @GetMapping("/categories")
-    public String getCategory(Model model){
+    public String viewAllCategory(Model model){
         model.addAttribute("categories", categoryService.getAllCategory());
         return "categories";
     }
 
     @GetMapping("/categories/add")
     public String addCategory(Model model){
-        Category category = new Category();
-        model.addAttribute("category" , category);
+        model.addAttribute("category" , new Category());
         model.addAttribute("pageTitle" , "Add new category");
         return "categoriesAdd";
     }
@@ -57,13 +55,12 @@ public class AdminController {
     @PostMapping("/categories/add")
     public String saveCategory(@RequestParam(value = "id", required = false) Long id, @ModelAttribute("category") Category category, RedirectAttributes ra ){
         categoryService.addCategory(category);
-
-        if(id == null){
-            ra.addFlashAttribute("msg", "Added successfully");
-        }else {
+        System.out.println(id);
+        if(id != 0){
             ra.addFlashAttribute("msg", "Updated successfully");
+        }else {
+            ra.addFlashAttribute("msg", "Added successfully");
         }
-
         return "redirect:/admin/categories";
     }
 
@@ -87,6 +84,20 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/categories/{id}")
+    public String detailCategory(@PathVariable("id") int id, Model model){
+        try {
+            Category category = categoryService.getCategoryById(id);
+            List<Product> productList = productService.getAllProduct();
+            model.addAttribute("category", category);
+            model.addAttribute("products", productList);
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+            return "redirect:/admin/categories";
+        }
+        return "categoriesDetail";
+    }
+
     // Product sessions
 
     @GetMapping("/products")
@@ -104,10 +115,10 @@ public class AdminController {
     }
 
     @PostMapping("/products/add")
-    public String saveProduct(@ModelAttribute("productDTO") ProductDTO productDTO, Model model,
+    public String saveProduct(@RequestParam(value = "productId",required = false) Long id,
+            @ModelAttribute("productDTO") ProductDTO productDTO, Model model,
                               @RequestParam("productImage")MultipartFile file,
                               @RequestParam("imgName") String imgName,
-                              @RequestParam(value = "id",required = false) Long id,
                               RedirectAttributes ra
                               ) throws IOException, UserNotFoundException {
         Product product = new Product();
@@ -120,10 +131,8 @@ public class AdminController {
         String imageUUID;
 
         if(id == null){
-            System.out.println(id);
             ra.addFlashAttribute("msg", "Added successfully");
         }else {
-            System.out.println(id);
             ra.addFlashAttribute("msg", "Updated successfully");
         }
 
@@ -141,16 +150,17 @@ public class AdminController {
     }
 
     @GetMapping("product/delete/{id}")
-    public String deleteProductById(@PathVariable(value = "id") Long id, RedirectAttributes ra){
+    public String deleteProductByID(@PathVariable(value = "id") Long id, RedirectAttributes ra){
         productService.deleteProductById(id);
         ra.addFlashAttribute("msg", "Deleted successfully");
         return "redirect:/admin/products";
     }
 
     @GetMapping("product/update/{id}")
-    public String updateProductById(@PathVariable(value = "id") Long id, Model model){
+    public String updateProductByID(@PathVariable(value = "id") Long id, Model model){
         try {
             Product product = productService.getProductById(id);
+
             ProductDTO productDTO = new ProductDTO();
             productDTO.setProductId(product.getProductId());
             productDTO.setName(product.getName());
@@ -169,5 +179,6 @@ public class AdminController {
             return "redirect:/admin/products";
         }
     }
+
 
 }

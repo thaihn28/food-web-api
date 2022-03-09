@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Data
@@ -15,4 +16,5 @@ public class Category {
 
     @Column(nullable = false, length = 30)
     private String name;
+
 }
