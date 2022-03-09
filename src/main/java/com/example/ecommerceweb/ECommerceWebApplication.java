@@ -8,11 +8,6 @@ public class ECommerceWebApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ECommerceWebApplication.class, args);
-        System.out.println("Out");
-        System.out.println("Out");
-        System.out.println("Out");
-        System.out.println("Out");
-        System.out.println("Out");
     }
 
 }

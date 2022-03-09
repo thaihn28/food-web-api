@@ -38,6 +38,9 @@
 <div class="container-fluid">
 
     <a th:href="@{/admin/products/add}" style="margin: 20px 0" class="btn btn-primary">Add Product</a>
+    <div th:if="${msg}" class="alert alert-success text-center">
+        [[${msg}]]
+    </div>
     <table class="table">
         <thead class="thead-light">
         <tr>
