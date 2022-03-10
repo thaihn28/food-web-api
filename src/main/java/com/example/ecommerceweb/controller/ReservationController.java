@@ -2,6 +2,7 @@ package com.example.ecommerceweb.controller;
 
 
 import com.example.ecommerceweb.model.Reservation;
+import com.example.ecommerceweb.model.ReservationDetail;
 import com.example.ecommerceweb.repository.ReservationRepository;
 import com.example.ecommerceweb.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,13 @@ import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/admin")
+@RequestMapping(value = "/reservation")
 public class ReservationController {
 
     @Autowired
@@ -34,11 +36,17 @@ public class ReservationController {
     @RequestMapping(value = "/viewReservation/{id}")
     public String detailReservation(@PathVariable(value = "id") Long id, Model model) {
         Reservation reservation = reservationService.findReservationById(id);
+        List<ReservationDetail> resDetail = reservation.getReservationDetails();
         model.addAttribute("reservation", reservation);
+        model.addAttribute("details", resDetail);
 
         return "reservation-detail";
 
     }
+
+
+
+
 
 
 

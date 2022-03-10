@@ -2,7 +2,12 @@ package com.example.ecommerceweb;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import com.example.ecommerceweb.model.Category;
+import com.example.ecommerceweb.model.ReservationDetail;
+import com.example.ecommerceweb.model.Table;
 import com.example.ecommerceweb.repository.CategoryRepository;
+import com.example.ecommerceweb.repository.ReservationDetailRepository;
+import com.example.ecommerceweb.repository.ReservationRepository;
+import com.example.ecommerceweb.repository.TableRepository;
 import com.example.ecommerceweb.service.CategoryService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +28,13 @@ public class testCategory {
     @Autowired
     private TestEntityManager entityManager;
 
+    @Autowired
+    ReservationRepository reservationRepository;
+    @Autowired
+    ReservationDetailRepository reservationDetailRepository;
+    @Autowired
+    TableRepository tableRepository;
+
 
     @Test
     public void testAdd(){
@@ -38,6 +50,15 @@ public class testCategory {
 //        Category existUser = entityManager.find(Category.class, saveCat.getId());
 //
 //        assertThat(existUser.getId()).isEqualTo(saveCat.getId());
+
+        Table table = tableRepository.getById(1L);
+        Table table1 = tableRepository.getById(2L);
+
+        ReservationDetail res2 = new ReservationDetail(1L, null, table, 5);
+        ReservationDetail res1 = new ReservationDetail(2L, null, table1, 12);
+
+        reservationDetailRepository.save(res1);
+        reservationDetailRepository.save(res2);
 
     }
 }

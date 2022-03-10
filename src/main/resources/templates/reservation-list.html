@@ -20,7 +20,7 @@
         <th>Client Name</th>
         <th>Phone Number</th>
         <th>Date</th>
-        <th>Approve</th>
+        <th>Status</th>
         <th>Option</th>
 
     </tr>
@@ -34,7 +34,7 @@
         <td th:if="${reservation.isApprove() == false}">Waiting</td>
         <td th:if="${reservation.isApprove() == true}">Approved</td>
         <td>
-            <a th:href="'/reservation/' + ${reservation.id}">Detail</a>
+            <a th:href="'/reservation/viewReservation/' + ${reservation.id}">Detail</a>
             <a th:href="'/reservation/delete/' + ${reservation.id}">Delete</a>
         </td>
 
