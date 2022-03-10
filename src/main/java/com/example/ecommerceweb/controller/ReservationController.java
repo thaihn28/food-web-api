@@ -25,7 +25,8 @@ public class ReservationController {
     @Autowired
     ReservationRepository reservationRepository;
 
-    @RequestMapping(value = "/viewReservation")
+    // usually in lower-case
+    @RequestMapping(value = "/view-reservation")
     public String allReservation(Model model) {
         List<Reservation> reservations = reservationRepository.findAll();
         model.addAttribute("reservations", reservations);
@@ -33,7 +34,7 @@ public class ReservationController {
         return "reservation-list";
     }
 
-    @RequestMapping(value = "/viewReservation/{id}")
+    @RequestMapping(value = "/view-reservation/{id}")
     public String detailReservation(@PathVariable(value = "id") Long id, Model model) {
         Reservation reservation = reservationService.findReservationById(id);
         List<ReservationDetail> resDetail = reservation.getReservationDetails();
