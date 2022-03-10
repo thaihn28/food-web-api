@@ -43,6 +43,27 @@ public class ReservationController {
         return "reservation-detail";
 
     }
+    
+    @RequestMapping(value = "/delete/{id}")
+    public String deleteReservation(@PathVariable(value = "id") Long id) {
+        reservationRepository.deleteById(id);
+
+        return "reservation-list";
+    }
+
+    @RequestMapping(value = "/approve/{id}")
+    public String approveRepository(@PathVariable(value = "id") Long id) {
+        Reservation reservation = reservationService.findReservationById(id);
+        if (!reservation.isApprove()) {
+            reservation.setApprove(true);
+        } else {
+            reservation.setApprove(false);
+        }
+
+        reservationRepository.save(reservation);
+
+        return "redirect:/reservation/viewReservation";
+    }
 
 
 

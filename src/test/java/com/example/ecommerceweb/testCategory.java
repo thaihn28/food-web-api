@@ -51,14 +51,18 @@ public class testCategory {
 //
 //        assertThat(existUser.getId()).isEqualTo(saveCat.getId());
 
-        Table table = tableRepository.getById(1L);
-        Table table1 = tableRepository.getById(2L);
+        //Table table = tableRepository.getById(1L);
+        //Table table1 = tableRepository.getById(2L);
 
-        ReservationDetail res2 = new ReservationDetail(1L, null, table, 5);
-        ReservationDetail res1 = new ReservationDetail(2L, null, table1, 12);
+        //ReservationDetail res2 = new ReservationDetail(1L, null, table, 5);
+        //ReservationDetail res1 = new ReservationDetail(2L, null, table1, 12);
 
-        reservationDetailRepository.save(res1);
-        reservationDetailRepository.save(res2);
+        //reservationDetailRepository.save(res1);
+        //reservationDetailRepository.save(res2);
+        Table table1 = new Table(3L, 8);
+        Table table2 = new Table(4L, 16);
 
+        tableRepository.save(table1);
+        tableRepository.save(table2);
     }
 }
