@@ -34,7 +34,7 @@
         <td th:if="${reservation.isApprove() == false}">Waiting</td>
         <td th:if="${reservation.isApprove() == true}">Approved</td>
         <td>
-            <a th:href="'/reservation/viewReservation/' + ${reservation.id}">Detail</a>
+            <a th:href="'/reservation/view-reservation/' + ${reservation.id}">Detail</a>
             <a th:href="'/reservation/delete/' + ${reservation.id}">Delete</a>
             <a th:href="'/reservation/approve/' + ${reservation.id}" th:if="${reservation.isApprove() == true}">Approve</a>
             <a th:href="'/reservation/approve/' + ${reservation.id}"  th:if="${reservation.isApprove() == false}">Deapprove</a>

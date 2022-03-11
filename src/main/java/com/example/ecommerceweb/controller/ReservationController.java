@@ -63,7 +63,7 @@ public class ReservationController {
 
         reservationRepository.save(reservation);
 
-        return "redirect:/reservation/viewReservation";
+        return "redirect:/reservation/view-reservation";
     }
 
 

@@ -1,12 +1,16 @@
 package com.example.ecommerceweb.api.reservation;
 
+import com.example.ecommerceweb.dto.ReservationDTO;
 import com.example.ecommerceweb.model.Reservation;
 import com.example.ecommerceweb.model.ReservationDetail;
+import com.example.ecommerceweb.model.ResponseObject;
 import com.example.ecommerceweb.model.Table;
 import com.example.ecommerceweb.repository.ReservationDetailRepository;
 import com.example.ecommerceweb.repository.ReservationRepository;
 import com.example.ecommerceweb.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -70,6 +74,13 @@ public class test {
         reservationDetailRepository.save(res1);
         reservationDetailRepository.save(res2);
         return "ok";
+    }
+
+    @PostMapping("/test2")
+    public ResponseEntity<ResponseObject> test(@RequestBody ReservationDTO reservationDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ResponseObject("ok", "insert success", reservationDTO)
+        );
     }
 
 }
