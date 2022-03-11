@@ -39,7 +39,7 @@ public class ProductController {
     }
 
     // Product detail
-    @GetMapping("/product/detail/{id}")
+    @GetMapping("/products/detail/{id}")
     public String detailProduct(@PathVariable(value = "id") Long id, Model model){
         try {
             Product product = productService.getProductById(id);
@@ -59,7 +59,7 @@ public class ProductController {
         model.addAttribute("productDTO", new ProductDTO());
         model.addAttribute("categories", categoryService.getAllCategory());
         ra.addFlashAttribute("pageTitle", "Add a new product");
-        return "/product/productsAdd";
+        return "/product/productAdd";
     }
 
     @PostMapping("/products/add")
@@ -97,14 +97,14 @@ public class ProductController {
         return "redirect:/admin/products";
     }
 
-    @GetMapping("product/delete/{id}")
+    @GetMapping("products/delete/{id}")
     public String deleteProductByID(@PathVariable(value = "id") Long id, RedirectAttributes ra){
         productService.deleteProductById(id);
         ra.addFlashAttribute("msg", "Deleted successfully");
         return "redirect:/admin/products";
     }
 
-    @GetMapping("product/update/{id}")
+    @GetMapping("products/update/{id}")
     public String updateProductByID(@PathVariable(value = "id") Long id, Model model){
         try {
             Product product = productService.getProductById(id);
@@ -121,20 +121,26 @@ public class ProductController {
             model.addAttribute("categories", categoryService.getAllCategory());
             model.addAttribute("productDTO", productDTO);
             model.addAttribute("pageTitle" , "Update category (Id: " + id + ")" );
-            return "/product/productsAdd";
+            return "/product/productAdd";
         } catch (UserNotFoundException e) {
             e.printStackTrace();
             return "redirect:/admin/products";
         }
     }
-    @GetMapping("/product/sort/asc")
+    @GetMapping("/products/sort/asc")
     public String sortProductAsc(Model model){
         model.addAttribute("products", productService.sortProductByPriceAsc());
         return "/product/products";
     }
-    @GetMapping("/product/sort/desc")
+    @GetMapping("/products/sort/desc")
     public String sortProductDesc(Model model){
         model.addAttribute("products", productService.sortProductByPriceDesc());
+        return "/product/products";
+    }
+
+    @GetMapping("/products/searchProduct")
+    public String searchProductByName(@RequestParam(value = "name") String name ,Model model){
+        model.addAttribute("products", productService.getAllProductsByName(name));
         return "/product/products";
     }
 

@@ -32,7 +32,7 @@ public class CategoryController {
     public String addCategory(Model model){
         model.addAttribute("category" , new Category());
         model.addAttribute("pageTitle" , "Add new category");
-        return "/category/categoriesAdd";
+        return "/category/categoryAdd";
     }
 
     @PostMapping("/categories/add")
@@ -60,7 +60,7 @@ public class CategoryController {
             Category category = categoryService.getCategoryById(id);
             model.addAttribute("category", category);
             model.addAttribute("pageTitle" , "Update category (Id: " + id + ")" );
-            return "/category/categoriesAdd";
+            return "/category/categoryAdd";
         } catch (UserNotFoundException e) {
             e.printStackTrace();
             return "redirect:/admin/categories";
@@ -78,6 +78,7 @@ public class CategoryController {
             e.printStackTrace();
             return "redirect:/admin/categories";
         }
-        return "/category/categoriesDetail";
+        return "/category/categoryDetail";
     }
+
 }
