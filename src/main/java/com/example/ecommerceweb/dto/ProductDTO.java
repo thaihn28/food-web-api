@@ -1,10 +1,7 @@
 package com.example.ecommerceweb.dto;
 
-import com.example.ecommerceweb.model.Category;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotNull;
 
 @Data
 public class ProductDTO {

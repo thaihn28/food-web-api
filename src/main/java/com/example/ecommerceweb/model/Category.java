@@ -3,8 +3,6 @@ package com.example.ecommerceweb.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
-import java.util.List;
 
 @Entity
 @Data

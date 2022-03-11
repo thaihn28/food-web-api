@@ -1,7 +1,6 @@
 package com.example.ecommerceweb.model;
 
 import lombok.Data;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

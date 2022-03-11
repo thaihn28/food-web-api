@@ -14,8 +14,7 @@ public class CategoryService {
     CategoryRepository categoryRepository;
 
     public List<Category> getAllCategory(){
-        List<Category> category = categoryRepository.findAll();
-        return category;
+        return categoryRepository.findAll();
     }
 
     public void addCategory(Category category){
@@ -32,8 +31,16 @@ public class CategoryService {
             return result.get();
         }
         throw new UserNotFoundException("Could not find any user with id" + id);
-
     }
 
+    public List<Category> findAllCategoryByName(String name){
+       List<Category> result =  categoryRepository.findAllByNameContains(name);
+       if(result != null){
+           return result;
+       }else {
+           System.out.println("Can not find any category");
+           return null;
+       }
+    }
 
 }
