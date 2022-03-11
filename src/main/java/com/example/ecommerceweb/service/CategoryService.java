@@ -22,11 +22,11 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
-    public void deleteCategoryById(Long id){
+    public void deleteCategoryById(int id){
         categoryRepository.deleteById(id);
     }
 
-    public Category getCategoryById(Long id) throws UserNotFoundException {
+    public Category getCategoryById(int id) throws UserNotFoundException {
         Optional <Category> result = categoryRepository.findById(id);
         if(result.isPresent()){
             return result.get();
