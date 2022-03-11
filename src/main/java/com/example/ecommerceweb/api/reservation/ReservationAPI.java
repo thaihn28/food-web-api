@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -32,10 +35,14 @@ public class ReservationAPI {
     ReservationDetailRepository reservationDetailRepository;
 
     @PostMapping("/new-reservation")
-    public ResponseEntity<ResponseObject> newRes(@RequestBody ReservationDTO resTemp) {
+    public ResponseEntity<ResponseObject> newRes(@RequestBody ReservationDTO resTemp) throws ParseException {
         Reservation res = new Reservation();
         res.setClientName(resTemp.getClientName());
+
+//        SimpleDateFormat spm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//        String realDate = spm.format(resTemp.getDate());
         res.setDate(resTemp.getDate());
+
         res.setAddress(resTemp.getAddress());
         res.setPhoneNumber(resTemp.getPhoneNumber());
         res.setNote(resTemp.getNote());
@@ -63,7 +70,7 @@ public class ReservationAPI {
 
         res.setReservationDetails(reservationDetailList);
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Ok", "New reservation added",
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "New reservation added",
                resTemp));
     }
 }

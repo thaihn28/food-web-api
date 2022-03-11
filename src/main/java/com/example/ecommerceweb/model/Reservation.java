@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -31,7 +32,7 @@ public class Reservation {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+7")
     private Date date;
 
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany(mappedBy = "reservation", cascade = CascadeType.REMOVE)
     private List<ReservationDetail> reservationDetails;
     @NotNull
     private String clientName;
@@ -45,6 +46,12 @@ public class Reservation {
 
     public Reservation() {
         isApprove = false;
+    }
+
+    public String getRealDate() {
+        SimpleDateFormat spm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String realDate = spm.format(date).toString();
+        return realDate;
     }
 
 

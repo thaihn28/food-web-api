@@ -10,9 +10,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
           integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <title>Reservation List</title>
+    <script>
+
+
+    </script>
 </head>
 <body>
 <h2>Reservation Management</h2>
+
 <table>
     <thead>
     <tr>
@@ -30,14 +35,17 @@
         <td th:text="${reservation.id}"></td>
         <td th:text="${reservation.clientName}"></td>
         <td th:text="${reservation.phoneNumber}"></td>
-        <td th:text="${reservation.date}"></td>
+        <td th:text="${reservation.getRealDate()}"></td>
         <td th:if="${reservation.isApprove() == false}">Waiting</td>
         <td th:if="${reservation.isApprove() == true}">Approved</td>
         <td>
             <a th:href="'/reservation/view-reservation/' + ${reservation.id}">Detail</a>
-            <a th:href="'/reservation/delete/' + ${reservation.id}">Delete</a>
-            <a th:href="'/reservation/approve/' + ${reservation.id}" th:if="${reservation.isApprove() == true}">Approve</a>
-            <a th:href="'/reservation/approve/' + ${reservation.id}"  th:if="${reservation.isApprove() == false}">Deapprove</a>
+            <form th:action="'/reservation/delete/' + ${reservation.id}" onsubmit="return confirm('Do you really want to delete this reservation');">
+
+                <input type="submit" value="Delete">
+            </form>
+            <a th:href="'/reservation/approve/' + ${reservation.id}" th:if="${reservation.isApprove() == false}">Approve</a>
+            <a th:href="'/reservation/approve/' + ${reservation.id}"  th:if="${reservation.isApprove() == true}">Deapprove</a>
         </td>
 
     </tr>

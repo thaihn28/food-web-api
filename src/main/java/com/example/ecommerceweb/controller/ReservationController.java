@@ -12,7 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,8 +31,17 @@ public class ReservationController {
 
     // usually in lower-case
     @RequestMapping(value = "/view-reservation")
-    public String allReservation(Model model) {
-        List<Reservation> reservations = reservationRepository.findAll();
+    public String getAllReservationByFilter(@RequestParam(value = "approve", required = false) Boolean status,
+                                            @RequestParam(value = "name", required = false) String name,
+                                            @RequestParam(value = "from", required = false) String from,
+                                            @RequestParam(value = "to", required = false) String to,
+                                            Model model) throws ParseException {
+        SimpleDateFormat spm = new SimpleDateFormat("yyyy-MM-dd");
+        List<Reservation> reservations;
+
+        reservations = reservationService.findReservationByNameAndDateAndStatus("B", "2021-03-11",
+                "2021-03-21", null);
+        //List<Reservation> reservations1 = reservationRepository.findAllByApprove(true);
         model.addAttribute("reservations", reservations);
 
         return "reservation-list";
@@ -49,7 +62,7 @@ public class ReservationController {
     public String deleteReservation(@PathVariable(value = "id") Long id) {
         reservationRepository.deleteById(id);
 
-        return "reservation-list";
+        return "redirect:/reservation/view-reservation/";
     }
 
     @RequestMapping(value = "/approve/{id}")
@@ -65,6 +78,8 @@ public class ReservationController {
 
         return "redirect:/reservation/view-reservation";
     }
+
+
 
 
 
