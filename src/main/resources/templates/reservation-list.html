@@ -16,8 +16,34 @@
     </script>
 </head>
 <body>
-<h2>Reservation Management</h2>
 
+<h2>Reservation Management</h2>
+<div>
+    <label>Search Bar</label>
+    <form th:object="${searchObject}" th:action="@{/reservation/view-reservation/}" method="get">
+        <fieldset class="form-group">
+            <label>Name:</label>
+            <input class="form-control" th:field="*{name}" type="text" name="name" placeholder="Search Name">
+        </fieldset>
+        <fieldset>
+            <label>Status:</label>
+            <!-- chưa hiểu sao nó lưu lại lắm           -->
+            <select th:field="*{status}">
+                <option th:each="option : ${searchObject.options}" th:value="${option.key}" th:text="${option.value}">
+            </select>
+        </fieldset>
+        <fieldset>
+            <label>From:</label>
+            <input class="form-control" th:field="*{fromDate}" type="date" name="from">
+        </fieldset>
+        <fieldset>
+            <label>To:</label>
+            <input class="form-control" th:field="*{toDate}" type="date" id="start" name="to">
+        </fieldset>
+
+        <input type="submit" value="submit">
+    </form>
+</div>
 <table>
     <thead>
     <tr>
@@ -32,7 +58,7 @@
     </thead>
     <tbody>
     <tr th:each="reservation: ${reservations}">
-        <td th:text="${reservation.id}"></td>
+        <td th:text="${reservation.getId()}"></td>
         <td th:text="${reservation.clientName}"></td>
         <td th:text="${reservation.phoneNumber}"></td>
         <td th:text="${reservation.getRealDate()}"></td>
@@ -40,12 +66,14 @@
         <td th:if="${reservation.isApprove() == true}">Approved</td>
         <td>
             <a th:href="'/reservation/view-reservation/' + ${reservation.id}">Detail</a>
-            <form th:action="'/reservation/delete/' + ${reservation.id}" onsubmit="return confirm('Do you really want to delete this reservation');">
+            <form th:action="'/reservation/delete/' + ${reservation.id}"
+                  onsubmit="return confirm('Do you really want to delete this reservation');">
 
                 <input type="submit" value="Delete">
             </form>
-            <a th:href="'/reservation/approve/' + ${reservation.id}" th:if="${reservation.isApprove() == false}">Approve</a>
-            <a th:href="'/reservation/approve/' + ${reservation.id}"  th:if="${reservation.isApprove() == true}">Deapprove</a>
+            <a th:href="'/reservation/approve/' + ${reservation.id}"
+               th:if="${reservation.isApprove() == false}">Approve</a>
+            <a th:href="'/reservation/approve/' + ${reservation.id}" th:if="${reservation.isApprove() == true}">Deapprove</a>
         </td>
 
     </tr>

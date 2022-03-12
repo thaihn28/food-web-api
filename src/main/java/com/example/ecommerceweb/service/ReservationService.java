@@ -1,5 +1,6 @@
 package com.example.ecommerceweb.service;
 
+import com.example.ecommerceweb.dto.SearchObject;
 import com.example.ecommerceweb.model.Reservation;
 import com.example.ecommerceweb.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,34 +19,39 @@ public class ReservationService {
     ReservationRepository reservationRepository;
 
     public Reservation findReservationById(Long id) {
-       return reservationRepository.findById(id).get();
+        return reservationRepository.findById(id).get();
     }
 
     public List<Reservation> findResByApprove(boolean status) {
         List<Reservation> allRes = reservationRepository.findAll();
         List<Reservation> returnRes = new ArrayList<>();
-        for (int i =0; i < allRes.size(); i++) {
+        for (int i = 0; i < allRes.size(); i++) {
             if (allRes.get(i).isApprove() == status) {
                 returnRes.add(allRes.get(i));
             }
         }
-        return  returnRes;
+        return returnRes;
     }
 
     public List<Reservation> findResByApprove(boolean status, List<Reservation> allRes) {
-        //List<Reservation> allRes = reservationRepository.findAll();
         List<Reservation> returnRes = new ArrayList<>();
-        for (int i =0; i < allRes.size(); i++) {
+        for (int i = 0; i < allRes.size(); i++) {
             if (allRes.get(i).isApprove() == status) {
                 returnRes.add(allRes.get(i));
             }
         }
-        return  returnRes;
+        return returnRes;
     }
-    public List<Reservation> findReservationByNameAndDateAndStatus(String name, String from, String to, Boolean status) throws ParseException {
-        //Ưu tiên xếp theo tên
-        //Ưu tiên xếp theo thời gian
-        //Ưu tiên xếp theo status
+
+    public List<Reservation> findReservationByNameAndDateAndStatus(SearchObject searchObject, int startPage, int endPage) throws ParseException {
+        String name = searchObject.getName();
+        if (name != null) {
+            name = searchObject.getName().trim();
+        }
+        Boolean status = searchObject.getStatus();
+        String from = searchObject.getFromDate();
+        String to = searchObject.getToDate();
+
         List<Reservation> allRes = reservationRepository.findAll();
         if (name == null || name.length() == 0 && status == null) {
 
@@ -77,18 +83,18 @@ public class ReservationService {
         SimpleDateFormat spm = new SimpleDateFormat("yyyy-MM-dd");
 
 
-        if (from == null && to == null) {
+        if (from == null || from.isEmpty() && to == null || to.isEmpty()) {
             return reservations;
         }
 
-        if (from == null) {
+        if (from == null || from.isEmpty()) {
             return reservations;
         }
-
+        //parse mặc định Hour là 00, minute là 00
         Date from1 = spm.parse(from);
-        if (to == null) {
+        if (to == null || to.isEmpty()) {
             Date today = new Date();
-            for (int i =0; i < reservations.size(); i++) {
+            for (int i = 0; i < reservations.size(); i++) {
                 Reservation res = reservations.get(i);
                 if (res.getDate().after(from1) && res.getDate().before(today)) {
                     returnRes.add(res);
@@ -97,11 +103,13 @@ public class ReservationService {
             return returnRes;
         }
         Date to1 = spm.parse(to);
-        for (int i =0; i < reservations.size(); i++) {
+        for (int i = 0; i < reservations.size(); i++) {
             Reservation res = reservations.get(i);
             if (res.getDate().after(from1) && res.getDate().before(to1)) {
-                if (!res.getDate().equals(from1))
-                 returnRes.add(res);
+                if (!res.getDate().equals(from1)) {
+                    returnRes.add(res);
+                }
+
             }
         }
         return returnRes;
