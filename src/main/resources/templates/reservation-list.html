@@ -17,9 +17,9 @@
 </head>
 <body>
 <div class="container col-md-5 mt-4">
-<h2>Reservation Management</h2>
+<h2 class="text-center">Reservation Management</h2>
 <div>
-    <label>Search Bar</label>
+    <label class="text-center">Search Bar</label>
     <form th:object="${searchObject}"  th:action="@{/reservation/view-reservation/}" method="get">
         <div class="form-inline d-inline-flex p-2 border row align-items-center justify-content-center">
         <fieldset>
@@ -70,7 +70,7 @@
         <td th:text="${reservation.phoneNumber}"></td>
         <td th:text="${reservation.getRealDate()}"></td>
         <td th:if="${reservation.isApprove() == false}">Waiting</td>
-        <td th:if="${reservation.isApprove() == true}">Approved</td>
+        <td th:if="${reservation.isApprove() == true}">Accepted</td>
         <td>
             <a th:href="'/reservation/view-reservation/' + ${reservation.id}">Detail</a>
             <form th:action="'/reservation/delete/' + ${reservation.id}"
