@@ -3,6 +3,9 @@ package com.example.ecommerceweb.service;
 import com.example.ecommerceweb.model.Product;
 import com.example.ecommerceweb.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductService {
+public class ProductService{
     @Autowired
     private ProductRepository productRepository;
 
@@ -46,21 +49,27 @@ public class ProductService {
         }
     }
     public List<Product> sortProductByPriceAsc(){
-        List<Product> result = productRepository.findAll(Sort.by("price").ascending().and(Sort.by("name")));
-        if(result != null){
+        List<Product> result = productRepository.findAll(Sort.by("price").ascending());
             return result;
-        }else{
-            System.out.println("Can not find product by name");
-            return null;
-        }
     }
     public List<Product> sortProductByPriceDesc(){
-        List<Product> result = productRepository.findAll(Sort.by("price").descending().and(Sort.by("name")));
-        if(result != null){
+        List<Product> result = productRepository.findAll(Sort.by("price").descending());
             return result;
-        }else{
-            System.out.println("Can not find product by name");
-            return null;
-        }
     }
+    public List<Product> sortProductByNameAsc(){
+        List<Product> result = productRepository.findAll(Sort.by("name").ascending());
+        return result;
+    }
+    public List<Product> sortProductByNameDesc(){
+        List<Product> result = productRepository.findAll(Sort.by("name").descending());
+        return result;
+    }
+    // Pagination
+    public Page<Product> findPaginated(int pageNo, int pageSize){
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        Page<Product> productList = productRepository.findAll(pageable);
+        return productList;
+    }
+
+
 }

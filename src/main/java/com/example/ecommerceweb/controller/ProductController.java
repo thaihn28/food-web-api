@@ -8,6 +8,7 @@ import com.example.ecommerceweb.service.CategoryService;
 import com.example.ecommerceweb.service.ProductService;
 import com.example.ecommerceweb.service.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,27 @@ public class ProductController {
 
     @GetMapping("/products")
     public String viewAllProduct(Model model){
-        model.addAttribute("products", productService.getAllProduct());
+//        model.addAttribute("products", productService.getAllProduct());
+//        return "/product/products";
+//        Pagination
+        return findPaginated(1, model);
+    }
+    // Pagination
+    @GetMapping("/products/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
+        int pageSize = 5;
+
+        Page<Product> page = productService.findPaginated(pageNo, pageSize);
+        List<Product> productList = page.getContent();
+        int totalPages = page.getTotalPages();
+        long totalItems = page.getTotalElements();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalItems", totalItems);
+        model.addAttribute("products", productList);
         return "/product/products";
+
     }
 
     // Product detail
@@ -127,14 +147,24 @@ public class ProductController {
             return "redirect:/admin/products";
         }
     }
-    @GetMapping("/products/sort/asc")
-    public String sortProductAsc(Model model){
+    @GetMapping("/products/sortByPrice/asc")
+    public String sortPriceProductAsc(Model model){
         model.addAttribute("products", productService.sortProductByPriceAsc());
         return "/product/products";
     }
-    @GetMapping("/products/sort/desc")
-    public String sortProductDesc(Model model){
+    @GetMapping("/products/sortByPrice/desc")
+    public String sortPriceProductDesc(Model model){
         model.addAttribute("products", productService.sortProductByPriceDesc());
+        return "/product/products";
+    }
+    @GetMapping("/products/sortByName/asc")
+    public String sortNameProductAsc(Model model){
+        model.addAttribute("products", productService.sortProductByNameAsc());
+        return "/product/products";
+    }
+    @GetMapping("/products/sortByName/desc")
+    public String sortNameProductDesc(Model model){
+        model.addAttribute("products", productService.sortProductByNameDesc());
         return "/product/products";
     }
 
@@ -143,5 +173,4 @@ public class ProductController {
         model.addAttribute("products", productService.getAllProductsByName(name));
         return "/product/products";
     }
-
 }
