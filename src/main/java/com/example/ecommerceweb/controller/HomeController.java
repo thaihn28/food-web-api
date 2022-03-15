@@ -24,8 +24,8 @@ public class HomeController {
     }
 
     // productById?id=
-    @GetMapping("/productById")
-    public Product productById(@RequestParam("id") Long id){
+    @GetMapping("/productById/{id}")
+    public Product productById(@PathVariable("id") Long id){
         try {
             return productService.getProductById(id);
         } catch (UserNotFoundException e) {
@@ -34,17 +34,17 @@ public class HomeController {
         }
     }
     // productByCategory?id=
-    @GetMapping("/productByCategory")
-    public List<Product> getProductByCategory(@RequestParam("id") int id){
+    @GetMapping("/productByCategory/{id}")
+    public List<Product> getProductByCategory(@PathVariable("id") int id){
         return productService.getAllProductsByCategoryId(id);
     }
 
-    @GetMapping("/searchCategory")
-    public List<Category> getAllCategoryByName(@RequestParam("name") String name){
+    @GetMapping("/searchCategory/{name}")
+    public List<Category> getAllCategoryByName(@PathVariable("name") String name){
         return categoryService.findAllCategoryByName(name);
     }
-    @GetMapping("/searchProduct")
-    public List<Product> getAllProductByName(@RequestParam("name") String name){
+    @GetMapping("/searchProduct/{name}")
+    public List<Product> getAllProductByName(@PathVariable("name") String name){
         return productService.getAllProductsByName(name);
     }
     @GetMapping("/sortProduct/asc")
