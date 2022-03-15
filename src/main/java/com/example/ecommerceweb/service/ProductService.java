@@ -65,11 +65,22 @@ public class ProductService{
         return result;
     }
     // Pagination
-    public Page<Product> findPaginated(int pageNo, int pageSize){
-        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+    public Page<Product> findPaginated(int pageNo){
+        Pageable pageable = PageRequest.of(pageNo - 1, 5);
         Page<Product> productList = productRepository.findAll(pageable);
         return productList;
     }
 
+    public Page<Product> findAllWithSort(String sortField, String sortDir, int pageNo) {
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ?
+                Sort.by(sortField).ascending() : Sort.by(sortField).descending();
+
+        Pageable pageable = PageRequest.of(pageNo - 1, 5, sort);
+        return productRepository.findAll(pageable);
+    }
+    public Page<Product> findAllByName(String name, int pageNo) {
+        Pageable pageable = PageRequest.of(pageNo - 1, 5 );
+        return productRepository.findAllByNameContains(name, pageable);
+    }
 
 }

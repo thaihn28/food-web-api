@@ -27,7 +27,6 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-
     @Column(nullable = false, length = 30)
     private String name;
 

@@ -20,15 +20,18 @@
 
             <div class="row">
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div th:href="@{/admin/products}" class="info-box blue-bg">
+                    <a  th:href="@{/admin/products}">
+                    <div class="info-box blue-bg">
                         <i class="fa fa-shopping-cart"></i>
                             <div class="count" th:text="${products.size()}"></div>
                         <div class="title">Products</div>
                     </div>
+                    </a>
                     <!--/.info-box-->
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div th:href="@{/admin/categories}" class="info-box brown-bg">
+                    <a th:href="@{/admin/categories}">
+                    <div  class="info-box brown-bg">
                         <i class="fa fa-bars"></i>
                         <div class="count" th:text="${categories.size()}"></div>
                         <div class="title">Categories</div>
