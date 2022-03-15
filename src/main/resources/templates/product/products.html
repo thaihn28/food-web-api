@@ -26,9 +26,9 @@
                                 Add New Product
                             </a>
                         </div>
-                        <form th:action="@{/admin/products/searchProduct}" >
+                        <form th:action="@{'/admin/products/page/' + ${currentPage} + '/searchProduct'}" >
                             <div class="col-lg-3">
-                                <input type="text" name="name" class="form-control" placeholder="Enter product name...">
+                                <input type="text" th:value="${name}" name="name" class="form-control" placeholder="Enter product name...">
                             </div>
                             <div class="col-lg-1">
                                 <input type="submit" value="Search" class="btn-success form-control">
@@ -36,13 +36,11 @@
                         </form>
                         <!--                        Drop down start-->
                         <div class="dropdown" style="position: initial;">
-                            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Sort
+                            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Sort by
                                 <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a th:href="@{/admin/products/sortByPrice/asc}">Ascending by price</a></li>
-                                <li><a th:href="@{/admin/products/sortByPrice/desc}">Descending by price</a></li>
-                                <li><a th:href="@{/admin/products/sortByName/asc}">Ascending by name</a></li>
-                                <li><a th:href="@{/admin/products/sortByName/desc}">Descending by name</a></li>
+                                <li><a th:href="@{'/admin/products/page/' + ${currentPage} +  '/price?sortDir=' + ${reverseSortDir}}">Price</a></li>
+                                <li><a th:href="@{'/admin/products/page/' + ${currentPage} +  '/name?sortDir=' + ${reverseSortDir}}">Name</a></li>
                             </ul>
                         </div>
                         <!--                        Drop down end-->
@@ -62,16 +60,7 @@
                     <tr>
                         <th>SN</th>
                         <th>ID</th>
-                        <th>Name
-<!--                            <a th:href="@{/admin/products/sort/asc}" class="text-decoration-none">-->
-<!--                                <img th:width="20dp" th:height="20dp" th:src="@{/images/up.png}">-->
-<!--                            </a>-->
-<!--                            <a th:href="@{/admin/products/sort/desc}" class="text-decoration-none" >-->
-<!--                                <img th:width="20dp" th:height="20dp" th:src="@{/images/down.png}">-->
-<!--                            </a>-->
-                            <!-- Example single danger button -->
-
-                        </th>
+                        <th>Name</th>
                         <th>Category</a></th>
                         <th>Preview</a></th>
                         <th><i class="icon_cogs"></i>Action</th>

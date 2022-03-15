@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,18 +36,17 @@ public class ProductController {
     // Product sessions
 
     @GetMapping("/products")
-    public String viewAllProduct(Model model){
+    public String getAllPages(Model model){
 //        model.addAttribute("products", productService.getAllProduct());
 //        return "/product/products";
 //        Pagination
-        return findPaginated(1, model);
+        return getOnePage(model, 1);
     }
+
     // Pagination
     @GetMapping("/products/page/{pageNo}")
-    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model){
-        int pageSize = 5;
-
-        Page<Product> page = productService.findPaginated(pageNo, pageSize);
+    public String getOnePage(Model model, @PathVariable(value = "pageNo") int pageNo){
+        Page<Product> page = productService.findPaginated(pageNo);
         List<Product> productList = page.getContent();
         int totalPages = page.getTotalPages();
         long totalItems = page.getTotalElements();
@@ -54,8 +55,27 @@ public class ProductController {
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("totalItems", totalItems);
         model.addAttribute("products", productList);
-        return "/product/products";
 
+        return "/product/products";
+    }
+    @GetMapping("/products/page/{pageNo}/{sortField}")
+    public String getPageWithSort(Model model,
+                                  @PathVariable("pageNo") int pageNo,
+                                  @PathVariable String sortField,
+                                  @PathParam("sortDir") String sortDir) {
+
+        Page<Product> page = productService.findAllWithSort(sortField, sortDir, pageNo);
+        int totalPages = page.getTotalPages();
+        long totalItems = page.getTotalElements();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalItems", totalItems);
+
+        model.addAttribute("sortDir", sortDir);
+        model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
+        model.addAttribute("products", page.getContent());
+        return "/product/products";
     }
 
     // Product detail
@@ -147,30 +167,17 @@ public class ProductController {
             return "redirect:/admin/products";
         }
     }
-    @GetMapping("/products/sortByPrice/asc")
-    public String sortPriceProductAsc(Model model){
-        model.addAttribute("products", productService.sortProductByPriceAsc());
-        return "/product/products";
-    }
-    @GetMapping("/products/sortByPrice/desc")
-    public String sortPriceProductDesc(Model model){
-        model.addAttribute("products", productService.sortProductByPriceDesc());
-        return "/product/products";
-    }
-    @GetMapping("/products/sortByName/asc")
-    public String sortNameProductAsc(Model model){
-        model.addAttribute("products", productService.sortProductByNameAsc());
-        return "/product/products";
-    }
-    @GetMapping("/products/sortByName/desc")
-    public String sortNameProductDesc(Model model){
-        model.addAttribute("products", productService.sortProductByNameDesc());
-        return "/product/products";
-    }
+    @GetMapping("/products/page/{pageNo}/searchProduct")
+    public String searchProductByName(@RequestParam(value = "name") String name , Model model, @PathVariable(value = "pageNo") int pageNo){
+        Page<Product> page = productService.findAllByName(name, pageNo);
+        int totalPages = page.getTotalPages();
+        long totalItems = page.getTotalElements();
 
-    @GetMapping("/products/searchProduct")
-    public String searchProductByName(@RequestParam(value = "name") String name ,Model model){
-        model.addAttribute("products", productService.getAllProductsByName(name));
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("totalItems", totalItems);
+        model.addAttribute("name", name);
+        model.addAttribute("products", page.getContent());
         return "/product/products";
     }
 }
