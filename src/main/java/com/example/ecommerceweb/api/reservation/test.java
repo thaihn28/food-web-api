@@ -1,5 +1,6 @@
 package com.example.ecommerceweb.api.reservation;
 
+import com.example.ecommerceweb.dto.ProductDTO;
 import com.example.ecommerceweb.dto.ReservationDTO;
 import com.example.ecommerceweb.model.Reservation;
 import com.example.ecommerceweb.model.ReservationDetail;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class test {
@@ -29,13 +31,14 @@ public class test {
     @GetMapping("/addTable")
     public Table add() {
 
-        return new Table(12L, 5);
+//        return new Table(12L, 5);
+        return  null;
     }
 
     @GetMapping("/viewRes")
     public Reservation viewReservation() {
-        Table table = new Table(1L, 2);
-        Table table1 = new Table(2L, 6);
+//        Table table = new Table(1L, 2);
+//        Table table1 = new Table(2L, 6);
 //
 //       tableRepository.save(table);
 //        tableRepository.save(table1);
@@ -82,5 +85,13 @@ public class test {
                 new ResponseObject("ok", "insert success", reservationDTO)
         );
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseObject> test3(@RequestBody Reservation newReservation, @PathVariable Long id) {
+        Optional<Reservation> res = reservationRepository.findById(id)
+                .map(reservation -> {
+                   reservation.setPhoneNumber(newReservation.getPhoneNumber());
+                   return reservationRepository.save(reservation);
+                });
+        return null;    }
 
 }
