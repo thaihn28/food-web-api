@@ -24,6 +24,7 @@ public class SearchObject {
     private Map<Boolean, String> options;
 
     public SearchObject() {
+
       this.order = "ascending";
       options = new HashMap<>();
       options.put(true, "Accepted");

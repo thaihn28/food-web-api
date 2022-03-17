@@ -8,13 +8,17 @@ import com.example.ecommerceweb.repository.ReservationRepository;
 import com.example.ecommerceweb.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -38,17 +42,16 @@ public class ReservationController {
 
         if (searchObject == null) {
             searchObject = new SearchObject();
+            searchObject.setStatus(false);
         }
-        //System.out.println(searchObject.getName() + "/");
-        /*searchObject.setName(name);
-        searchObject.setFromDate(from);
-        searchObject.setToDate(to);
-        searchObject.setStatus(status);
-*/
+
         List<Reservation> reservations = reservationService.findReservationByNameAndDateAndStatus(searchObject, 0, 0);
 
+        //session.setAttribute("reservations", reservations);
+        Collections.sort(reservations);
         model.addAttribute("reservations", reservations);
         model.addAttribute("searchObject", searchObject);
+
 
         return "reservation-list";
     }
@@ -65,14 +68,16 @@ public class ReservationController {
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public String deleteReservation(@PathVariable(value = "id") Long id) {
+    public String deleteReservation(@PathVariable(value = "id") Long id/*, HttpSession session, HttpServletRequest req*/) {
         reservationRepository.deleteById(id);
+
 
         return "redirect:/reservation/view-reservation/";
     }
 
     @RequestMapping(value = "/approve/{id}")
-    public String approveRepository(@PathVariable(value = "id") Long id, @ModelAttribute("searchObject") SearchObject searchObject,
+    public String approveRepository(@PathVariable(value = "id") Long id,
+                                    HttpServletRequest req,
                                     Model model) {
         Reservation reservation = reservationService.findReservationById(id);
         if (!reservation.isApprove()) {
@@ -82,7 +87,6 @@ public class ReservationController {
         }
 
         reservationRepository.save(reservation);
-        model.addAttribute("searchObject", searchObject);
 
         return "redirect:/reservation/view-reservation";
     }

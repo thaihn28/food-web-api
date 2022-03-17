@@ -18,5 +18,7 @@ public class Table {
     @Column(unique = true, nullable = false)
     private Integer tableTypes;
 
+    private Integer remainingTable;
+
 
 }

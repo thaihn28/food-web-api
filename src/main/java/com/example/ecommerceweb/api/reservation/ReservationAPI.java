@@ -69,6 +69,7 @@ public class ReservationAPI {
         }
 
         res.setReservationDetails(reservationDetailList);
+        //reservationRepository.save(res);
 
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("OK", "New reservation added",
                resTemp));

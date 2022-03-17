@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @Builder
 @AllArgsConstructor
-public class Reservation {
+public class Reservation implements Comparable<Reservation> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,7 +55,14 @@ public class Reservation {
     }
 
 
-
-
-
+    @Override
+    public int compareTo(Reservation o) {
+        if (this.getDate().after(o.getDate())) {
+            return -1;
+        } else if (this.getDate().before(o.getDate())) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
