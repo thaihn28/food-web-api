@@ -17,6 +17,10 @@
             </div>
         </div>
 
+        <div th:if="${msg}" class="alert alert-success" role="alert">
+            <span th:text="${msg}"></span>
+        </div>
+
         <div class="row">
             <section class="panel" style="margin-bottom: 0px;">
                 <div class="panel-body">
