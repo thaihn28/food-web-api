@@ -1,6 +1,6 @@
 package com.example.ecommerceweb.service;
 
-import com.example.ecommerceweb.model.Admin;
+import com.example.ecommerceweb.model.AdminDetail;
 import com.example.ecommerceweb.model.Role;
 import com.example.ecommerceweb.model.RegistrationRequest;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ public class RegistrationAdminService {
         if(!isValidEmail){
             throw new IllegalAccessException("Email not valid");
         }
-        return appUserService.signUpAdmin(new Admin(
+        return appUserService.signUpAdmin(new AdminDetail(
                 request.getFirstName(),
                 request.getFirstName(),
                 request.getEmail(),

@@ -43,7 +43,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                     <a  th:href="@{/admin/products}">
                     <div class="info-box blue-bg">
-                        <i class="fa fa-shopping-cart"></i>
+                        <i class="fa fa-folder"></i>
                             <div class="count" th:text="${products.size()}"></div>
                         <div class="title">Products</div>
                     </div>
@@ -61,12 +61,23 @@
                     <!--/.info-box-->
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                    <div class="info-box dark-bg">
+                    <div th:href="@{/admin/reservation/view-reservation}" class="info-box dark-bg">
                         <i class="fa fa-table"></i>
-                        <div class="count">Reservation</div>
-                        <div class="title">Reservation</div>
+                        <div class="count" th:text="${reservations.size()}"></div>
+                            <span class="title" th:if="${reservations.size()} > 1" th:text="'Table reservation request are waiting'"></span>
+                            <span class="title" th:if="${reservations.size()} < 1" th:text="'No table reservation request is waiting'"></span>
                     </div>
             </div>
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <a  th:href="@{/admin/carts}">
+                        <div class="info-box green-bg">
+                            <i class="fa fa-shopping-cart"></i>
+                            <div class="count" th:text="${carts.size()}"></div>
+                            <div class="title">Carts Management</div>
+                        </div>
+                    </a>
+                    <!--/.info-box-->
+                </div>
             </div>
         </section>
 <!--        <h1>hello</h1>-->

@@ -1,9 +1,13 @@
 package com.example.ecommerceweb.controller;
 
+import com.example.ecommerceweb.service.CartItemService;
 import com.example.ecommerceweb.service.CategoryService;
 import com.example.ecommerceweb.service.ProductService;
+import com.example.ecommerceweb.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 // 2 session: Category and Product
@@ -16,12 +20,18 @@ public class AdminController {
     @Autowired
     CategoryService categoryService;
 
-//    @GetMapping("/admin")
-//    public String admin(Model model){
-//        model.addAttribute("products", productService.getAllProduct());
-//        model.addAttribute("categories", categoryService.getAllCategory());
-//        AppUser user = new AppUser();
-//        model.addAttribute("user",user);
-//        return "index";
-//    }
+    @Autowired
+    ReservationService reservationService;
+
+    @Autowired
+    CartItemService cartItemService;
+
+    @GetMapping("/admin")
+    public String admin(Model model){
+        model.addAttribute("products", productService.getAllProduct());
+        model.addAttribute("categories", categoryService.getAllCategory());
+        model.addAttribute("reservations", reservationService.findResByApprove(false));
+        model.addAttribute("carts", cartItemService.getAllCart());
+        return "index";
+    }
 }

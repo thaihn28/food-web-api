@@ -1,7 +1,7 @@
 package com.example.ecommerceweb.service;
 
-import com.example.ecommerceweb.model.Admin;
-import com.example.ecommerceweb.model.User;
+import com.example.ecommerceweb.model.AdminDetail;
+import com.example.ecommerceweb.model.UserDetail;
 import com.example.ecommerceweb.repository.AdminRepository;
 import com.example.ecommerceweb.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -34,7 +34,7 @@ public class AppUserService implements UserDetailsService {
                         String.format(USER_NOT_FOUND_MSG,email)));
     }
 
-    public String signUpUser(User user) {
+    public String signUpUser(UserDetail user) {
         boolean userExists = userRepository.findByEmail(user.getEmail())
                 .isPresent();
         String result = "";
@@ -52,7 +52,7 @@ public class AppUserService implements UserDetailsService {
         return result;
     }
 
-    public String signUpAdmin(Admin admin) {
+    public String signUpAdmin(AdminDetail admin) {
         boolean userExists = adminRepository.findByEmail(admin.getEmail())
                 .isPresent();
         String result = "";

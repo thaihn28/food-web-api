@@ -16,6 +16,9 @@
                 </ol>
             </div>
         </div>
+        <div th:if="${msg}" class="alert alert-success" role="alert">
+            <span th:text="${msg}"></span>
+        </div>
     <div class="row">
         <div class="col-lg-12">
             <section class="panel" style="margin-bottom: 0px;">
@@ -27,7 +30,6 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
             </section>
             <section class="panel">

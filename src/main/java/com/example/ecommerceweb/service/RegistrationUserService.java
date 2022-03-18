@@ -2,7 +2,7 @@ package com.example.ecommerceweb.service;
 
 import com.example.ecommerceweb.model.Role;
 import com.example.ecommerceweb.model.RegistrationRequest;
-import com.example.ecommerceweb.model.User;
+import com.example.ecommerceweb.model.UserDetail;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ public class RegistrationUserService {
         if(!isValidEmail){
             throw new IllegalAccessException("Email not valid");
         }
-        return appUserService.signUpUser(new User(
+        return appUserService.signUpUser(new UserDetail(
                 request.getFirstName(),
                 request.getFirstName(),
                 request.getEmail(),
