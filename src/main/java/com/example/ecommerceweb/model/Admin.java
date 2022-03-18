@@ -10,14 +10,13 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-
 @Entity
 @Getter
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-@Table(name = "user")
-public class User {
+@Table(name = "admin")
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -40,11 +39,11 @@ public class User {
     private Role role;
 
 
-    public User(String firstName,
-                String lastName,
-                String email,
-                String password,
-                Role role) {
+    public Admin(String firstName,
+                 String lastName,
+                 String email,
+                 String password,
+                 Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -52,6 +51,6 @@ public class User {
         this.role = role;
     }
 
-    public User(User user) {
+    public Admin(Admin admin) {
     }
 }

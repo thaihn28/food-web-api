@@ -3004,7 +3004,6 @@ div[data-role="editor-toolbar"] {
 
 }
 
-* /Widget-Content */
 
 
 
@@ -3360,7 +3359,6 @@ div[data-role="editor-toolbar"] {
 
 /*-----	map-----*/
 
-* Google maps */
 
 
 
@@ -4152,7 +4150,7 @@ div[data-role="editor-toolbar"] {
 
         margin-bottom: -4px;
 
-    };
+    }
 
 }
 

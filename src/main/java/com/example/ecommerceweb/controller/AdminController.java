@@ -4,8 +4,6 @@ import com.example.ecommerceweb.service.CategoryService;
 import com.example.ecommerceweb.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
 
 // 2 session: Category and Product
@@ -18,10 +16,12 @@ public class AdminController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("/admin")
-    public String admin(Model model){
-        model.addAttribute("products", productService.getAllProduct());
-        model.addAttribute("categories", categoryService.getAllCategory());
-        return "index";
-    }
+//    @GetMapping("/admin")
+//    public String admin(Model model){
+//        model.addAttribute("products", productService.getAllProduct());
+//        model.addAttribute("categories", categoryService.getAllCategory());
+//        AppUser user = new AppUser();
+//        model.addAttribute("user",user);
+//        return "index";
+//    }
 }

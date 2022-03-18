@@ -19,29 +19,29 @@
 	<div class="container col-md-5 mt-4">
 		<div class="card">
 			<div class="card-body">
-				<form th:action="'/saveAdd'" th:object="${user}" method="post">
+				<form th:action="@{/save}" th:object="${user}" method="post">
 					<h2 class="text-center text-primary">Create a new account</h2>
 					<fieldset class="form-group">
 						<label>First name </label>
 						<input class="form-control" type="text" th:field="*{firstName}">
 						<!--form error-->
-						<p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"/>
+<!--						<p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"/>-->
 					</fieldset>
 					<fieldset class="form-group">
 						<label>Last name </label>
 						<input class="form-control" type="text" th:field="*{lastName}">
 						<!--form error-->
-						<p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"/>
+<!--						<p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"/>-->
 					</fieldset>
 					<fieldset>
 						<label>Your email</label>
 						<input class="form-control" type="email" th:field="*{email}">
-						<p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"/>
+<!--						<p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"/>-->
 					</fieldset>
 					<fieldset class="form-group">
 						<label>Password </label>
 						<input class="form-control" type="password" th:field="*{password}">
-						<p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>
+<!--						<p th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"/>-->
 					</fieldset>
 					<div class="col text-center mt-3">
 						<button type="submit" class="btn btn-success" >Register</button>

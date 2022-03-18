@@ -1,46 +1,35 @@
-//package com.example.ecommerceweb.controller;
-//
-//import com.example.ecommerceweb.model.Role;
-//import com.example.ecommerceweb.model.User;
-////import com.example.ecommerceweb.service.RegistrationService;
-//import com.example.ecommerceweb.repository.RoleRepository;
-//import com.example.ecommerceweb.repository.UserRepository;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.web.bind.annotation.*;
-//
-//import javax.servlet.ServletException;
-//import javax.servlet.http.HttpServletRequest;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@RestController
-//@RequestMapping(path = "/registration")
-//public class RegistrationController {
-//
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
-//    @Autowired
-//    private UserRepository userRepository;
-////    private RegistrationService registrationService;
-//    @Autowired
-//    RoleRepository roleRepository;
-//
-//    @PostMapping(value = "/")
-//       public void registerPost(@RequestBody User user){
-//        String password = user.getPassword();
-//        user.setPassword(bCryptPasswordEncoder.encode(password));
-//        List<Role> roles = new ArrayList<>();
-//        roles.add(roleRepository.findById(2).get());
-//        user.setRoles(roles);
-//        userRepository.save(user);
-////        request.login(user.getEmail(),password);
-//////        return "Redirect:/login";
-//
-//    }
-//
-////    @GetMapping(path = "confirm")
-////    public String confirm(@RequestParam("token") String token) {
-////        return registrationService.confirmToken(token);
-////    }
-//}
+package com.example.ecommerceweb.controller;
+
+import com.example.ecommerceweb.model.RegistrationRequest;
+import com.example.ecommerceweb.repository.UserRepository;
+import com.example.ecommerceweb.service.AppUserService;
+import com.example.ecommerceweb.service.RegistrationAdminService;
+import com.example.ecommerceweb.service.RegistrationUserService;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+//@RequestMapping(path = "/api/registration")
+@AllArgsConstructor
+public class RegistrationController {
+
+    @Autowired
+    private UserRepository userRepository;
+    private AppUserService appUserService;
+    private RegistrationUserService registrationService;
+    private RegistrationAdminService registrationAdmin;
+
+    @PostMapping(value = "/user-registration")
+     public String registerUser(@RequestBody RegistrationRequest request) throws IllegalAccessException {
+         return registrationService.registerUser(request);
+     }
+
+    @PostMapping(value = "/admin-registration")
+    public String registerAdmin(@RequestBody RegistrationRequest request) throws IllegalAccessException {
+        return registrationAdmin.registerAdmin(request);
+    }
+
+
+
+}

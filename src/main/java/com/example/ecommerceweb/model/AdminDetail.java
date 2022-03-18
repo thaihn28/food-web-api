@@ -4,34 +4,30 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.Collections;
 
-public class CustomUserDetail extends User implements UserDetails {
+public class AdminDetail extends Admin implements UserDetails {
 
-    public CustomUserDetail(User user){
-        super(user);
+    public AdminDetail(Admin admin) {
+        super(admin);
     }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorityList= new ArrayList<>();
-        List<Role> roles = super.getRoles();
-        roles.forEach(role ->{
-            authorityList.add(new SimpleGrantedAuthority(role.getName()));
-        });
-        return authorityList;
-    }
-
-    @Override
-    public String getUsername() {
-        return super.getEmail();
+        SimpleGrantedAuthority authority =
+                new SimpleGrantedAuthority(super.getRole().name());
+        return Collections.singletonList(authority);
     }
 
     @Override
     public String getPassword() {
         return super.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return super.getEmail();
     }
 
     @Override
@@ -53,4 +49,8 @@ public class CustomUserDetail extends User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
+
+
