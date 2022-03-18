@@ -7,15 +7,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 public class CustomUserDetail extends User implements UserDetails {
+
     public CustomUserDetail(User user){
         super(user);
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorityList= new ArrayList<>();
-        super.getRoles().forEach(role ->{
+        List<Role> roles = super.getRoles();
+        roles.forEach(role ->{
             authorityList.add(new SimpleGrantedAuthority(role.getName()));
         });
         return authorityList;
@@ -23,7 +26,7 @@ public class CustomUserDetail extends User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return super.getUsername();
+        return super.getEmail();
     }
 
     @Override
@@ -33,21 +36,21 @@ public class CustomUserDetail extends User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
 }

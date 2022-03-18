@@ -32,18 +32,20 @@ public class GoogleOAuth2SuccessHandler implements AuthenticationSuccessHandler 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2AuthenticationToken token = (OAuth2AuthenticationToken) authentication;
-        String username = token.getPrincipal().getAttributes().get("username").toString();
-        if(userRepository.findUserByUsername(username).isPresent()){
+        String email = token.getPrincipal().getAttributes().get("email").toString();
+        if(userRepository.findUserByEmail(email).isPresent()){
 
         }else{
             User user = new User();
-            user.setUsername(username);
+            user.setFirstName(token.getPrincipal().getAttributes().get("firstName").toString());
+            user.setLastName(token.getPrincipal().getAttributes().get("lastName").toString());
+            user.setEmail(email);
             List<Role> roles = new ArrayList<>();
-            roles.add(roleRepository.findById(2L).get());
+            roles.add(roleRepository.findById(2).get());
             user.setRoles(roles);
             userRepository.save(user);
         }
-        redirectStrategy.sendRedirect(request,response,"/");
+        redirectStrategy.sendRedirect(request,response,"/admin");
     }
 
     @Override
