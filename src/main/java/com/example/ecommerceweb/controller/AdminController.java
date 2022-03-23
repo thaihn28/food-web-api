@@ -26,6 +26,11 @@ public class AdminController {
     @Autowired
     CartItemService cartItemService;
 
+    @GetMapping("/login")
+    public String login(){
+        return "login";
+    }
+
     @GetMapping("/admin")
     public String admin(Model model){
         model.addAttribute("products", productService.getAllProduct());

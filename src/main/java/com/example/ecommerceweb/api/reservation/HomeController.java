@@ -1,4 +1,4 @@
-package com.example.ecommerceweb.controller;
+package com.example.ecommerceweb.api.reservation;
 
 import com.example.ecommerceweb.model.Category;
 import com.example.ecommerceweb.model.Product;
