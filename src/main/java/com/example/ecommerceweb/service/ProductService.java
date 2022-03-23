@@ -48,6 +48,13 @@ public class ProductService{
             return null;
         }
     }
+
+    public Page<Product> getProductsWithPaginationAndSorting(int page, int pageSize, String orderBy, String order) {
+        Sort.Direction direction = order.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Page<Product> products = productRepository.findAll(PageRequest.of(page, pageSize).withSort(Sort.by(direction, orderBy)));
+        return products;
+    }
+
     public List<Product> sortProductByPriceAsc(){
         List<Product> result = productRepository.findAll(Sort.by("price").ascending());
             return result;
