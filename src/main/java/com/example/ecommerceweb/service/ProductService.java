@@ -49,8 +49,18 @@ public class ProductService{
         }
     }
 
+    private Sort.Direction getSortDirection(String direction) {
+        if (direction.equalsIgnoreCase("asc")) {
+            return Sort.Direction.ASC;
+        } else if (direction.equalsIgnoreCase("desc")) {
+            return Sort.Direction.DESC;
+        }
+
+        return Sort.Direction.ASC;
+    }
+
     public Page<Product> getProductsWithPaginationAndSorting(int page, int pageSize, String orderBy, String order) {
-        Sort.Direction direction = order.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort.Direction direction = getSortDirection(order);
         Page<Product> products = productRepository.findAll(PageRequest.of(page, pageSize).withSort(Sort.by(direction, orderBy)));
         return products;
     }
