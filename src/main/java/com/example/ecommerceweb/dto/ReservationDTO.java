@@ -11,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +35,16 @@ public class ReservationDTO {
     private String phoneNumber;
     @NotNull
     private String address;
+
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+7")
+    private Date appointmentTime;
+
+    @NotNull
+    @DateTimeFormat(pattern = "HH:mm")
+    @JsonFormat(pattern = "HH:mm", timezone = "GMT+7")
+    private LocalTime appointmentHour;
 
     List<TableDTO> table;
 }

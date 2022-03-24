@@ -39,9 +39,10 @@ public class ReservationAPI {
         Reservation res = new Reservation();
         res.setClientName(resTemp.getClientName());
 
-//        SimpleDateFormat spm = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-//        String realDate = spm.format(resTemp.getDate());
         res.setDate(resTemp.getDate());
+        res.setComplete(false);
+        res.setAppointmentHour(resTemp.getAppointmentHour());
+        res.setAppointmentTime(resTemp.getAppointmentTime());
 
         res.setAddress(resTemp.getAddress());
         res.setPhoneNumber(resTemp.getPhoneNumber());

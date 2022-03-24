@@ -12,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,14 @@ public class Reservation implements Comparable<Reservation> {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+7")
     private Date date;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+7")
+    private Date appointmentTime;
+
+    @DateTimeFormat(pattern = "HH:mm")
+    @JsonFormat(pattern = "HH:mm", timezone = "GMT+7")
+    private LocalTime appointmentHour;
+
     @OneToMany(mappedBy = "reservation", cascade = CascadeType.REMOVE)
     private List<ReservationDetail> reservationDetails;
     @NotNull
@@ -44,8 +53,11 @@ public class Reservation implements Comparable<Reservation> {
 
     private boolean isApprove;
 
+    private boolean complete;
+
     public Reservation() {
         isApprove = false;
+        complete = false;
     }
 
     public String getRealDate() {

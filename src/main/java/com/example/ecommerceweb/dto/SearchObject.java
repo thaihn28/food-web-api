@@ -18,18 +18,19 @@ public class SearchObject {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String toDate;
     private Boolean status;
-    private Integer startPage;
-    private Integer endPage;
     private String order;
     private Map<Boolean, String> options;
+    private Map<String, String> sortOptions;
 
     public SearchObject() {
 
-      this.order = "ascending";
-      options = new HashMap<>();
-      options.put(true, "Accepted");
-      options.put(false, "Waiting");
-      options.put(null, "Both");
+        this.order = "sendDESC";
+        options = new HashMap<>();
+        options.put(true, "Accepted");
+        options.put(false, "Waiting");
+        options.put(null, "Both");
+
+        sortOptions = new HashMap<>();
 
     }
 }
