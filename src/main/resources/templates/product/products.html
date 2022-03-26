@@ -38,16 +38,7 @@
                                 <input type="submit" value="Search" class="btn-success form-control">
                             </div>
                         </form>
-                        <!--                        Drop down start-->
-                        <div class="dropdown" style="position: initial;">
-                            <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Sort by
-                                <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a th:href="@{'/admin/products/page/' + ${currentPage} +  '/price?sortDir=' + ${reverseSortDir}}">Price</a></li>
-                                <li><a th:href="@{'/admin/products/page/' + ${currentPage} +  '/name?sortDir=' + ${reverseSortDir}}">Name</a></li>
-                            </ul>
-                        </div>
-                        <!--                        Drop down end-->
+
                     </div>
 
                 </div>
