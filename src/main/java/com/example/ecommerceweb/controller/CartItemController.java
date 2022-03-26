@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,7 @@ public class CartItemController {
     }
 
     @GetMapping("/carts/approve/{id}")
-    public String updateCartItemStatus(Model model, @PathVariable("id") Long id, CartItem cartItem){
+    public String updateCartItemStatus(Model model, @PathVariable("id") Long id, CartItem cartItem, RedirectAttributes redirectAttributes){
         try {
              cartItem = cartItemService.getCartItemById(id);
             if(!cartItem.isApprove()){
@@ -67,6 +68,12 @@ public class CartItemController {
             e.printStackTrace();
         }
         cartItemService.saveCartItem(cartItem);
+        redirectAttributes.addFlashAttribute("msg", "Updated status successfully!");
+        return "redirect:/admin/carts";
+    }
+    @GetMapping("/carts/delete/{id}")
+    public String deleteCartItem(@PathVariable("id") Long id){
+        cartItemService.deleteCartItem(id);
         return "redirect:/admin/carts";
     }
 }

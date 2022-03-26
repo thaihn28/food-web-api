@@ -56,14 +56,6 @@ public class ProductService{
         List<Product> result = productRepository.findAll(Sort.by("price").descending());
             return result;
     }
-    public List<Product> sortProductByNameAsc(){
-        List<Product> result = productRepository.findAll(Sort.by("name").ascending());
-        return result;
-    }
-    public List<Product> sortProductByNameDesc(){
-        List<Product> result = productRepository.findAll(Sort.by("name").descending());
-        return result;
-    }
     // Pagination
     public Page<Product> findPaginated(int pageNo){
         Pageable pageable = PageRequest.of(pageNo - 1, 5);

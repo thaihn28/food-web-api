@@ -8,10 +8,10 @@
     <section class="wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h3 class="page-header"><i class="fa fa fa-bars"></i> Carts Management</h3>
+                <h3 class="page-header"><i class="fa fa fa-bars"></i> Orders</h3>
                 <ol class="breadcrumb">
                     <li><i class="fa fa-home"></i><a th:href="@{/admin}">Home</a></li>
-                    <li><i class="fa fa-bars"></i><a th:href="@{/admin/carts}">Carts</a></li>
+                    <li><i class="fa fa-bars"></i><a th:href="@{/admin/carts}">Orders</a></li>
                     <li><i class="fa fa-square-o"></i></li>
                 </ol>
             </div>
@@ -25,7 +25,7 @@
             <section class="panel">
                 <header class="panel-heading">
                     <h1 class="text-center text text-danger">
-                        Cart Management
+                        Order Management
                     </h1>
                 </header>
 
@@ -45,35 +45,38 @@
 
                     </tr>
 
-                    <tr th:each="card, iStat : ${carts}">
-                        <td th:text="${card.id}"></td>
+                    <tr th:each="cart, iStat : ${carts}">
+                        <td th:text="${cart.id}"></td>
                         <td>
-                            <a th:data-id="${card.id}"
-                               th:data-name="${card.username}"
-                               th:data-phoneNo="${card.phoneNo}"
-                               th:data-address="${card.address}"
+                            <a th:data-id="${cart.id}"
+                               th:data-name="${cart.username}"
+                               th:data-phoneNo="${cart.phoneNo}"
+                               th:data-address="${cart.address}"
                                onclick="showCustomerDetail(this.getAttribute('data-id'),this.getAttribute('data-username'),this.getAttribute('data-phoneNo'),this.getAttribute('data-address'))"
-                               th:text="${card.username}"></a>
+                               th:text="${cart.username}"></a>
                         </td>
 
                         <td>
-                            <a th:text="${card.product.name}" class="text-decoration-none" th:href="@{/admin/products/detail/{id}(id = ${card.product.productId})}"></a>
+                            <a th:text="${cart.product.name}" class="text-decoration-none" th:href="@{/admin/products/detail/{id}(id = ${cart.product.productId})}"></a>
                         </td>
-                        <td><img src="" height="100px" width="100px"  th:src="@{${'/productImages/' + card.product.imageName}}"></td>
-                        <td th:text="${card.total} + '$'"></td>
-                        <td th:text="${card.quantity}"></td>
-                        <td th:text="${card.date}"></td>
-                        <td th:switch="${card.isApprove()}">
+                        <td><img src="" height="100px" width="100px"  th:src="@{${'/productImages/' + cart.product.imageName}}"></td>
+                        <td th:text="${cart.total} + '$'"></td>
+                        <td th:text="${cart.quantity}"></td>
+                        <td th:text="${cart.date}"></td>
+                        <td th:switch="${cart.isApprove()}">
                             <div th:case="true"><span class="text text-success">Approve</span></div>
                             <div th:case="false"><span class="text text-danger">Pending</span></div>
                         </td>
                         <td>
-                            <a th:data-id="${card.id}"
-                               th:data-name="${card.product.name}"
-                               onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
-                               class="btn btn-success" style="color: white">Approve
+                            <a class="btn btn-success" th:href="@{/admin/carts/approve/{id}(id=${cart.id})}">
+                                Approve
                             </a>
-                            <a class="btn btn-danger" th:href="@{/admin/carts/approve/{id}(id=${card.id})}">Deny</a>
+                            <a class="btn btn-danger" th:href="@{/admin/carts/approve/{id}(id=${cart.id})}">Deny</a>
+                            <a th:data-id="${cart.id}"
+                               th:data-name="${cart.product.name}"
+                               onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
+                               class="btn btn-warning" style="color: white">Delete
+                            </a>
                         </td>
                     </tr>
                     </tbody>
@@ -154,8 +157,9 @@
     <!-- Dialog -->
     <!--    Show delete dialog-->
     <script>
-        function showConfirmModalDialog(id) {
-            $('#yesOption').attr('href', '/admin/carts/approve/' + id);
+        function showConfirmModalDialog(id,name) {
+            $('#oderName').text(name);
+            $('#yesOption').attr('href', '/admin/carts/delete/' + id);
             $('#confirmationId').modal('show');
         }
     </script>
@@ -169,7 +173,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Do you want to approve this order?
+                    Do you want to delete this order?
                 </div>
                 <div class="modal-footer">
                     <a id="yesOption" type="button" class="btn btn-success">Yes</a>

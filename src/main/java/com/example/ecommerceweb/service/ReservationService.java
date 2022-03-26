@@ -23,8 +23,8 @@ public class ReservationService {
     }
 
     public List<Reservation> findResByApprove(boolean status) {
-        List<Reservation> allRes = reservationRepository.findAll();
         List<Reservation> returnRes = new ArrayList<>();
+        List<Reservation> allRes = reservationRepository.findAll();
         for (int i = 0; i < allRes.size(); i++) {
             if (allRes.get(i).isApprove() == status) {
                 returnRes.add(allRes.get(i));

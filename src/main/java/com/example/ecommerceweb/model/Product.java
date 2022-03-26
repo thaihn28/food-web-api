@@ -34,4 +34,5 @@ public class Product {
     @Column
     private int quantity;
     private String imageName;
+
 }

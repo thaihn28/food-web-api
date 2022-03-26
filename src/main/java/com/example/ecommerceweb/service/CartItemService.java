@@ -30,6 +30,9 @@ public class CartItemService {
         }
         throw new UserNotFoundException("Can not found this cart item");
     }
+    public void deleteCartItem(Long id){
+        cartItemRepository.deleteById(id);
+    }
 
     // Pagination
     public Page<CartItem> findPaginated(int pageNo){

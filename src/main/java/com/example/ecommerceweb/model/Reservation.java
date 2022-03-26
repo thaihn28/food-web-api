@@ -54,6 +54,13 @@ public class Reservation implements Comparable<Reservation> {
         return realDate;
     }
 
+    public boolean isApprove() {
+        return isApprove;
+    }
+
+    public void setApprove(boolean approve) {
+        isApprove = approve;
+    }
 
     @Override
     public int compareTo(Reservation o) {
