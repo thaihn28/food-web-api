@@ -16,6 +16,7 @@
                 </ol>
             </div>
         </div>
+        <!--                        Drop down start-->
 
         <div th:if="${msg}" class="alert alert-success" role="alert">
             <span th:text="${msg}"></span>
@@ -30,7 +31,7 @@
                                 Add New Product
                             </a>
                         </div>
-                        <form th:action="@{'/admin/products/page/' + ${currentPage} + '/searchProduct'}" >
+                        <form th:action="@{'/admin/products/page/' + ${currentPage} + '/searchProduct'}" style="position: absolute; left: 60%">
                             <div class="col-lg-3">
                                 <input type="text" th:value="${name}" name="name" class="form-control" placeholder="Enter product name...">
                             </div>
@@ -39,14 +40,16 @@
                             </div>
                         </form>
 
+
+                        <!--                        Drop down end-->
                     </div>
-git
+
                 </div>
 
             </section>
             <section class="panel">
                 <header class="panel-heading">
-<!--                    <div class="text-center" style="font-size: 24px; font-weight: bold" > Products List</div>-->
+                                        <div class="text-center" style="font-size: 24px; font-weight: bold" > Products List</div>
 
                 </header>
 
@@ -55,12 +58,13 @@ git
                     <tr>
                         <th>SN</th>
                         <th>ID</th>
-                        <th>Name</th>
+                        <th>Name
+                        </th>
                         <th>Category</a></th>
                         <th>Preview</a></th>
                         <th><i class="icon_cogs"></i>Action</th>
                         <th><i class="fa fa-info"></i>Detail</th>
-
+                        <th><i class="fa fa-sort"></i>Sort By</th>
                     </tr>
 
                     <tr th:each="product, iStat : ${products}">
@@ -79,7 +83,12 @@ git
                             <a href="" th:href="@{/admin/products/update/{id}(id=${product.productId})}" class="btn btn-warning">Update</a>
                         </td>
                         <td>
-                            <a class="btn btn-info" th:href="@{/admin/products/detail/{id}(id=${product.productId})}">View</a>
+                            <a class="btn btn-primary" th:href="@{/admin/products/detail/{id}(id=${product.productId})}">View</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-dark" th:href="@{'/admin/products/page/' + ${currentPage} +  '/price?sortDir=' + ${reverseSortDir}}">Price</a>
+                            <a class="btn btn-light" th:href="@{'/admin/products/page/' + ${currentPage} +  '/name?sortDir=' + ${reverseSortDir}}">Name</a>
                         </td>
                     </tr>
                     </tbody>
@@ -89,8 +98,8 @@ git
                 </div>
 
                 <div class="text-center">
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
                             <li class="page-item ">
                                 <a style="color: #0b97c4" class="page-link" th:if="${currentPage > 1}"
                                    th:href="@{/admin/products/page/1}">First</a>
@@ -120,11 +129,11 @@ git
                                 <span style="color: #0b97c4" th:unless="${currentPage < totalPages}">Last</span>
                             </li>
                         </ul>
-                </nav>
+                    </nav>
                 </div>
             </section>
         </div>
-    <!--Content of the page-->
+        <!--Content of the page-->
     </section>
     <script>
         function showConfirmModalDialog(id, name) {
