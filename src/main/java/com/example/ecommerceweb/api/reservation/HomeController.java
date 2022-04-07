@@ -45,7 +45,7 @@ public class HomeController {
     }
 
     // products
-    @GetMapping("/products/{id}")
+    @GetMapping("/product/{id}")
     public Product productById(@PathVariable("id") Long id){
         try {
             return productService.getProductById(id);
@@ -54,20 +54,11 @@ public class HomeController {
             return null;
         }
     }
-    @GetMapping("/products/{name}")
-    public List<Product> getAllProductByName(@PathVariable("name") String name){
-        return productService.getAllProductsByName(name);
-    }
-
     // categories
-    @GetMapping("/categories/{id}")
+    @GetMapping("/category/{id}")
     public List<Product> getProductByCategory(@PathVariable("id") int id){
         return productService.getAllProductsByCategoryId(id);
     }
 
-    @GetMapping("/categories/{name}")
-    public List<Category> getAllCategoryByName(@PathVariable("name") String name){
-        return categoryService.findAllCategoryByName(name);
-    }
 
 }
