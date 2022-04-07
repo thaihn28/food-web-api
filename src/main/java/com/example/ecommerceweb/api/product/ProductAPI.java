@@ -1,8 +1,6 @@
-package com.example.ecommerceweb.api.reservation;
+package com.example.ecommerceweb.api.product;
 
-import com.example.ecommerceweb.model.Category;
 import com.example.ecommerceweb.model.Product;
-import com.example.ecommerceweb.service.CategoryService;
 import com.example.ecommerceweb.service.ProductService;
 import com.example.ecommerceweb.service.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,19 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+@RequestMapping("/products")
 @RestController
-public class HomeController {
+public class ProductAPI {
     @Autowired
     ProductService productService;
 
-    @Autowired
-    CategoryService categoryService;
-
-<<<<<<< HEAD:src/main/java/com/example/ecommerceweb/api/reservation/HomeController.java
-    @GetMapping("/products")
+    @RequestMapping
     public ResponseEntity<Map<String, Object>> getAllProducts(
             @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
             @RequestParam(value = "orderBy", required = false, defaultValue = "name") String orderBy,
@@ -39,15 +33,13 @@ public class HomeController {
             response.put("totalPages", pageRes.getTotalPages());
 
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // products
-    @GetMapping("/product/{id}")
-    public Product productById(@PathVariable("id") Long id){
+    @RequestMapping("/{id}")
+    public Product productById(@PathVariable("id") Long id) {
         try {
             return productService.getProductById(id);
         } catch (UserNotFoundException e) {
@@ -55,13 +47,4 @@ public class HomeController {
             return null;
         }
     }
-=======
->>>>>>> origin/refactor:src/main/java/com/example/ecommerceweb/controller/HomeController.java
-    // categories
-    @GetMapping("/category/{id}")
-    public List<Product> getProductByCategory(@PathVariable("id") int id){
-        return productService.getAllProductsByCategoryId(id);
-    }
-
-
 }
