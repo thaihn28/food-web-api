@@ -23,7 +23,6 @@ public class HomeController {
     @Autowired
     CategoryService categoryService;
 
-<<<<<<< HEAD:src/main/java/com/example/ecommerceweb/api/reservation/HomeController.java
     @GetMapping("/products")
     public ResponseEntity<Map<String, Object>> getAllProducts(
             @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
@@ -55,8 +54,6 @@ public class HomeController {
             return null;
         }
     }
-=======
->>>>>>> origin/refactor:src/main/java/com/example/ecommerceweb/controller/HomeController.java
     // categories
     @GetMapping("/category/{id}")
     public List<Product> getProductByCategory(@PathVariable("id") int id){
