@@ -72,15 +72,17 @@
                         <td th:text="${product.productId}"></td>
                         <td th:text="${product.name}"></td>
                         <td th:text="${product.category.name}"></td>
-                        <td><img src="" height="100px" width="100px"  th:src="@{${'/productImages/' + product.imageName}}"></td>
+<!--                        <td><img src="" height="100px" width="100px"  th:src="@{${'/productImages/' + product.imageName}}"></td>-->
+                        <td><img src="" height="100px" width="100px"  th:src="@{${product.imageName}}"></td>
                         <!--            Show dialog to delete-->
                         <td>
-                            <a th:data-id="${product.productId}"
-                               th:data-name="${product.name}"
-                               onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
-                               class="btn btn-danger" style="color: white">Delete
-                            </a>
+<!--                            <a th:data-id="${product.productId}"-->
+<!--                               th:data-name="${product.name}"-->
+<!--                               onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"-->
+<!--                               class="btn btn-danger" style="color: white">Delete-->
+<!--                            </a>-->
                             <a href="" th:href="@{/admin/products/update/{id}(id=${product.productId})}" class="btn btn-warning">Update</a>
+                            <a href="" th:href="@{/admin/products/delete/{id}(id=${product.productId})}" onclick="return confirm('Are you sure want to delete it?')" class="btn btn-danger">Delete</a>
                         </td>
                         <td>
                             <a class="btn btn-primary" th:href="@{/admin/products/detail/{id}(id=${product.productId})}">View</a>
