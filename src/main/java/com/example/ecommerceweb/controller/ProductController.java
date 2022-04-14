@@ -105,8 +105,8 @@ public class ProductController {
     @PostMapping("/products/add")
     public String saveProduct(@RequestParam(value = "productId",required = false) Long id,
                               @ModelAttribute("productDTO") ProductDTO productDTO, Model model,
-//                              @RequestParam("productImage") MultipartFile file,
-//                              @RequestParam("imgName") String imgName,
+                              @RequestParam("productImage") MultipartFile file,
+                              @RequestParam("imgName") String imgName,
                               RedirectAttributes ra
     ) throws IOException, UserNotFoundException {
         Product product = new Product();
@@ -116,8 +116,7 @@ public class ProductController {
         product.setPrice(productDTO.getPrice());
         product.setQuantity(productDTO.getQuantity());
         product.setDescription(productDTO.getDescription());
-        product.setImageName(productDTO.getImageName());
-//        String imageUUID;
+        String imageUUID;
 
         if(id == null){
             ra.addFlashAttribute("msg", "Added successfully");
@@ -125,14 +124,14 @@ public class ProductController {
             ra.addFlashAttribute("msg", "Updated successfully");
         }
 
-//        if(!file.isEmpty()){
-//            imageUUID = file.getOriginalFilename();
-//            Path fileNameAndPath = Paths.get(uploadDir, imageUUID);
-//            Files.write(fileNameAndPath, file.getBytes());
-//        }else{
-//            imageUUID = imgName;
-//        }
-//        product.setImageName(imageUUID);
+        if(!file.isEmpty()){
+            imageUUID = file.getOriginalFilename();
+            Path fileNameAndPath = Paths.get(uploadDir, imageUUID);
+            Files.write(fileNameAndPath, file.getBytes());
+        }else{
+            imageUUID = imgName;
+        }
+        product.setImageName("http://localhost:8080/productImages/" + imageUUID);
         productService.addProduct(product);
         model.addAttribute("categories", categoryService.getAllCategory());
         return "redirect:/admin/products";
