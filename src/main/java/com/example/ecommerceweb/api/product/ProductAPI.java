@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/products")
+@RequestMapping("/api")
 @RestController
 public class ProductAPI {
     @Autowired
@@ -24,7 +24,7 @@ public class ProductAPI {
     @Autowired
     CategoryService categoryService;
 
-    @RequestMapping
+    @RequestMapping("/products")
     public ResponseEntity<Map<String, Object>> getAllProducts(
             @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
             @RequestParam(value = "orderBy", required = false, defaultValue = "name") String orderBy,
@@ -44,7 +44,7 @@ public class ProductAPI {
         }
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping("/product/{id}")
     public Product productById(@PathVariable("id") Long id) {
         try {
             return productService.getProductById(id);

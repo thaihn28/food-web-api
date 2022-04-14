@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
-@RequestMapping("/admin")
+@RequestMapping("/api")
 @RestController
 public class CartItemAPI {
     @Autowired
@@ -22,7 +22,7 @@ public class CartItemAPI {
     ProductService productService;
 
     @PostMapping("/carts/add")
-    public CartItemDTO addCartItem(@RequestBody CartItemDTO cartItemDTO) throws ParseException, UserNotFoundException {
+    public CartItemDTO addCartItem(@RequestBody CartItemDTO cartItemDTO) throws UserNotFoundException {
             CartItem cartItem = new CartItem();
 
             cartItem.setId(cartItemDTO.getId());
