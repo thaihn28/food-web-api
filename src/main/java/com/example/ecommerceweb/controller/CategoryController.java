@@ -40,39 +40,10 @@ public class CategoryController {
 
 
 
-    @RequestMapping(value = "/categories-test")
+    @RequestMapping(value = "/category")
     public String viewAllCategory(Model model){
-//        List<Category> categoryList = categoryService.getAllCategory();
-//        model.addAttribute("categories", categoryList);
-        return "/category/index";
-    }
-    @RequestMapping(value = "/categories")
-    public String getAllReservationByFilter(@ModelAttribute("searchObject") @Valid SearchObject searchObject,
-                                            BindingResult result,
-                                            Model model) throws ParseException {
-
-        if (searchObject == null) {
-            searchObject = new SearchObject();
-            searchObject.setStatus(false);
-            searchObject.setOrder("sendDESC");
-        }
-        SimpleDateFormat spm = new SimpleDateFormat("yyyy-MM-dd");
-        if (searchObject.getFromDate() != null && searchObject.getToDate() != null) {
-            if (!searchObject.getFromDate().isEmpty() && !searchObject.getToDate().isEmpty()) {
-                Date fromDate = spm.parse(searchObject.getFromDate());
-                Date toDate = spm.parse(searchObject.getToDate());
-                if (fromDate.after(toDate)) {
-                    result.rejectValue("fromDate", "fromDate.error", "Ngày bắt đầu không được lớn hơn ngày kết thúc");
-                }
-            }
-        }
-
-        List<Reservation> reservations = reservationService.findReservationByNameAndDateAndStatus(searchObject, 0, 0);
-
-        //session.setAttribute("reservations", reservations);
-        Collections.sort(reservations);
-        model.addAttribute("reservations", reservations);
-        model.addAttribute("searchObject", searchObject);
+        List<Category> categoryList = categoryService.getAllCategory();
+        model.addAttribute("categories", categoryList);
         return "/category/categories";
     }
 
