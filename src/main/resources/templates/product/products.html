@@ -18,9 +18,9 @@
         </div>
         <!--                        Drop down start-->
 
-        <div th:if="${msg}" class="alert alert-success" role="alert">
-            <span th:text="${msg}"></span>
-        </div>
+<!--        <div th:if="${msg}" class="alert alert-success" role="alert">-->
+<!--            <span th:text="${msg}"></span>-->
+<!--        </div>-->
 
         <div class="row">
             <section class="panel" style="margin-bottom: 0px;">
@@ -86,8 +86,8 @@
                             <a class="btn btn-primary" th:href="@{/admin/products/detail/{id}(id=${product.productId})}">View</a>
                         </td>
                         <td>
-                            <a class="btn btn-dark" th:href="@{'/admin/products/page/' + ${currentPage} +  '/price?sortDir=' + ${reverseSortDir}}">Price</a>
-                            <a class="btn btn-light" th:href="@{'/admin/products/page/' + ${currentPage} +  '/name?sortDir=' + ${reverseSortDir}}">Name</a>
+                            <a class="btn btn-info" th:href="@{'/admin/products/page/' + ${currentPage} +  '/price?sortDir=' + ${reverseSortDir}}">Price</a>
+                            <a class="btn btn-info" th:href="@{'/admin/products/page/' + ${currentPage} +  '/name?sortDir=' + ${reverseSortDir}}">Name</a>
                         </td>
                     </tr>
                     </tbody>
