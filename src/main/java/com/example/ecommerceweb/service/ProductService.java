@@ -39,15 +39,15 @@ public class ProductService{
         return productRepository.findAllByCategoryId(id);
     }
 
-    public List<Product> getAllProductsByName(String name){
-        List<Product> result = productRepository.findAllByNameContains(name);
-        if(result != null){
-            return result;
-        }else{
-            System.out.println("Can not find product by name");
-            return null;
-        }
-    }
+//    public List<Product> getAllProductsByName(String name){
+//        List<Product> result = productRepository.findAllByNameContains(name);
+//        if(result != null){
+//            return result;
+//        }else{
+//            System.out.println("Can not find product by name");
+//            return null;
+//        }
+//    }
 
     private Sort.Direction getSortDirection(String direction) {
         if (direction.equalsIgnoreCase("asc")) {
@@ -65,14 +65,14 @@ public class ProductService{
         return products;
     }
 
-    public List<Product> sortProductByPriceAsc(){
-        List<Product> result = productRepository.findAll(Sort.by("price").ascending());
-            return result;
-    }
-    public List<Product> sortProductByPriceDesc(){
-        List<Product> result = productRepository.findAll(Sort.by("price").descending());
-            return result;
-    }
+//    public List<Product> sortProductByPriceAsc(){
+//        List<Product> result = productRepository.findAll(Sort.by("price").ascending());
+//            return result;
+//    }
+//    public List<Product> sortProductByPriceDesc(){
+//        List<Product> result = productRepository.findAll(Sort.by("price").descending());
+//            return result;
+//    }
     // Pagination
     public Page<Product> findPaginated(int pageNo){
         Pageable pageable = PageRequest.of(pageNo - 1, 5);

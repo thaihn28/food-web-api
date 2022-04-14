@@ -1,6 +1,8 @@
 package com.example.ecommerceweb.api.product;
 
+import com.example.ecommerceweb.model.Category;
 import com.example.ecommerceweb.model.Product;
+import com.example.ecommerceweb.service.CategoryService;
 import com.example.ecommerceweb.service.ProductService;
 import com.example.ecommerceweb.service.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RequestMapping("/products")
@@ -17,6 +20,9 @@ import java.util.Map;
 public class ProductAPI {
     @Autowired
     ProductService productService;
+
+    @Autowired
+    CategoryService categoryService;
 
     @RequestMapping
     public ResponseEntity<Map<String, Object>> getAllProducts(
@@ -46,5 +52,10 @@ public class ProductAPI {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @RequestMapping("/category/{id}")
+    public List<Product> productNameById(@PathVariable("id") int id) {
+        return productService.getAllProductsByCategoryId(id);
     }
 }
