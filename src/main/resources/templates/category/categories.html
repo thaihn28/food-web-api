@@ -3,145 +3,163 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="_layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"-->
+    <!--          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+    <!--    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"-->
+    <!--          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">-->
+    <title>Reservation List</title>
+    <script>
+
+
+    </script>
+</head>
 <body>
+<div layout:fragment="content">
+    <section class="wrapper">
+        <div class="container ">
+            <h2 class="text-center">Reservation Management</h2>
+            <div>
+                <label class="text-center">Filter</label>
+                <form th:object="${searchObject}" th:action="@{/reservation/view-reservation/}" method="get">
+                    <div class="form-inline d-inline-flex p-2 border row align-items-center justify-content-center">
+                        <fieldset>
+                            <label class="mr-sm-2">Name:</label>
+                            <input class="form-control mb-2 mr-sm-2" th:field="*{name}" type="text" name="name"
+                                   placeholder="Search Name">
+                        </fieldset>
+                        <fieldset>
+                            <label class="mr-sm-2">From:</label>
+                            <input class="form-control mb-2 mr-sm-2" th:field="*{fromDate}" type="date" name="from">
+                            <p th:if="${#fields.hasErrors('fromDate')}" th:errorclass="error" th:errors="*{fromDate}"/>
+                        </fieldset>
+                        <fieldset>
+                            <label class="mr-sm-2">To:</label>
+                            <input class="form-control mb-2 mr-sm-2" th:field="*{toDate}" type="date" id="start"
+                                   name="to">
+                            <p th:if="${#fields.hasErrors('toDate')}" th:errorclass="error" th:errors="*{toDate}"/>
+                        </fieldset>
+                        <fieldset>
+                            <label class="mr-sm-2">Status:</label>
+                            <!-- chưa hiểu sao nó lưu lại lắm           -->
+                            <select class="form-control mb-2 mr-sm-2" th:field="*{status}">
+                                <option th:each="option : ${searchObject.options}" th:value="${option.key}"
+                                        th:text="${option.value}">
+                            </select>
+                        </fieldset>
+                        <fieldset>
+                            <label class="mr-sm-2">Sort:</label>
+                            <!-- chưa hiểu sao nó lưu lại lắm           -->
+                            <select class="form-control mb-2 mr-sm-2" th:field="*{order}">
+                                <option th:each="option : ${searchObject.sortOptions}" th:value="${option.key}"
+                                        th:text="${option.value}">
+                            </select>
+                        </fieldset>
+                    </div>
+                    <section class="panel">
 
-<h1>Helloooooo</h1>
+                        <div class="panel-body">
+                            <input class="btn btn-success" type="submit" value="Submit">
+                            <!--                            <a class="btn btn-primary" th:href="@{/reservation/view-reservation}">Refresh</a>-->
+                            <form th:object="${searchObject}" th:action="@{/refresh}">
 
-<!--<div layout:fragment="content">-->
-<!--    <section class="wrapper">-->
-<!--        <div class="row">-->
-<!--            <div class="col-lg-12">-->
-<!--                <h3 class="page-header"><i class="fa fa fa-bars"></i> Categories</h3>-->
-<!--                <ol class="breadcrumb">-->
-<!--                    <li><i class="fa fa-home"></i><a th:href="@{/admin}">Home</a></li>-->
-<!--                    <li><i class="fa fa-bars"></i><a th:href="@{/admin/categories}">Categories</a></li>-->
-<!--                </ol>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div th:if="${msg}" class="alert alert-success" role="alert">-->
-<!--            <span th:text="${msg}"></span>-->
-<!--        </div>-->
-<!--    <div class="row">-->
-<!--        <div class="col-lg-12">-->
-<!--            <section class="panel" style="margin-bottom: 0px;">-->
-<!--                <div class="panel-body">-->
-<!--                    <div class="row">-->
-<!--                        <div class="col-lg-6">-->
-<!--                            <a th:href="@{/admin/categories/add}" class="btn btn-primary">-->
-<!--                                Add New Category-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </section>-->
-<!--            <section class="panel">-->
-<!--                <header class="panel-heading">-->
-<!--                    Categories List-->
-<!--                </header>-->
 
-<!--                <table class="table table-striped table-advance table-hover">-->
-<!--                    <tbody>-->
-<!--                    <tr>-->
-<!--                        <th>SN</th>-->
-<!--                        <th>ID</th>-->
-<!--                        <th>Name</th>-->
-<!--                        <th><i class="icon_cogs"></i> Action</th>-->
-<!--                        <th><i class="fa fa-info"></i> Detail</th>-->
-<!--                    </tr>-->
+                                <input class="btn btn-primary" type="submit" value="Refresh">
+                            </form>
+                        </div>
 
-<!--                    <tr th:each="category, iStat : ${categories}">-->
-<!--                        <td th:text="${iStat.index + 1}"></td>-->
-<!--                        <td th:text="${category.id}"></td>-->
-<!--                        <td th:text="${category.name}"></td>-->
-<!--                        <td>-->
-<!--                            <a th:data-id="${category.id}"-->
-<!--                               th:data-name="${category.name}"-->
-<!--                               onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"-->
-<!--                               class="btn btn-danger" style="color: white">Delete-->
-<!--                            </a>-->
-<!--&lt;!&ndash;                            <a href="" th:href="@{/admin/categories/delete/{id}(id=${category.id})}" onclick="return confirm('Are you sure want to delete it?')" class="btn btn-danger">Delete</a>&ndash;&gt;-->
-<!--                            <a href="" th:href="@{/admin/categories/update/{id}(id=${category.id})}" class="btn btn-warning">Update</a>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <a class="btn btn-info" th:href="@{/admin/categories/detail/{id}(id=${category.id})}">View</a>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    </tbody>-->
-<!--                </table>-->
 
-<!--&lt;!&ndash;                <footer style="font-size: large" class="panel-footer">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <nav aria-label="Page navigation example">&ndash;&gt;-->
-<!--&lt;!&ndash;                        Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]&ndash;&gt;-->
+                    </section>
+                </form>
+            </div>
 
-<!--&lt;!&ndash;                        <ul class="pagination">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <li class="page-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a class="page-link" th:if="${currentPage > 1}"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   th:href="@{/templates/product/countries/page/1}">First</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <span th:unless="${currentPage > 1}">First</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
+            <section class="panel">
+                <table class="table table-striped table-advance table-hover">
+                    <!--                    <div th:if="${#fields.hasErrors('globalError')}">-->
+                    <!--                        <h3>Global errors:</h3>-->
+                    <!--                        <p th:each="err : ${#fields.errors('globalError')}" th:text="${err}" class="error" />-->
+                    <!--                    </div>-->
+                    <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Client Name</th>
+                        <th>Phone Number</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Option</th>
+                        <th></th>
 
-<!--&lt;!&ndash;                            <li class="page-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a th:if="${currentPage > 1}"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   th:href="@{'/parameters/countries/page/' + ${currentPage - 1}}">Previous</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <span th:unless="${currentPage > 1}">Previous</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="reservation: ${reservations}">
+                        <div th:if="${reservation.complete == null || reservation.complete == false}">
+                            <tr>
+                                <td th:text="${reservation.getId()}"></td>
+                                <td th:text="${reservation.clientName}"></td>
+                                <td th:text="${reservation.phoneNumber}"></td>
+                                <td th:text="${reservation.getRealDate()}"></td>
+                                <td th:if="${reservation.isApprove() == false}">Waiting</td>
+                                <td th:if="${reservation.isApprove() == true}">Accepted</td>
+                                <td>
+                                    <a class="btn btn-primary"
+                                       th:href="'/reservation/view-reservation/' + ${reservation.id}">Detail</a>
+                                    <form th:action="'/reservation/delete/' + ${reservation.id}"
+                                          onsubmit="return confirm('Do you really want to delete this reservation');">
 
-<!--&lt;!&ndash;                            <li class="page-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <span th:each="i: ${#numbers.sequence(1, totalPages)}">&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <a th:href="@{'/parameters/countries/page/' + ${i}}">[[${i}]]</a>&nbsp; &nbsp;&ndash;&gt;-->
-<!--&lt;!&ndash;                                </span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
+                                        <input class="btn btn-danger" type="submit" value="Delete">
+                                    </form>
+                                    <a class="btn btn-success" th:href="'/reservation/approve/' + ${reservation.id}"
+                                       th:if="${reservation.isApprove() == false}">Accept</a>
+                                    <a class="btn btn-warning" th:href="'/reservation/approve/' + ${reservation.id}"
+                                       th:if="${reservation.isApprove() == true}">Unaccept</a>
+                                </td>
 
-<!--&lt;!&ndash;                            <li class="page-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a th:if="${currentPage < totalPages}"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   th:href="@{'/parameters/countries/page/' + ${currentPage + 1}}">Next</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <span th:unless="${currentPage < totalPages}">Next</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
+                                <td>
+                                    <div th:if="${reservation.isApprove() == true}">
 
-<!--&lt;!&ndash;                            <li class="page-item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a th:if="${currentPage < totalPages}"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   th:href="@{'/parameters/countries/page/' + ${totalPages}}">Last</a>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <span th:unless="${currentPage < totalPages}">Last</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </li>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </ul>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </nav>&ndash;&gt;-->
 
-<!--&lt;!&ndash;                </footer>&ndash;&gt;-->
-<!--            </section>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash;Content of the page&ndash;&gt;-->
-<!--    </section>-->
-<!--    <script>-->
-<!--        function showConfirmModalDialog(id, name) {-->
-<!--            $('#productName').text(name);-->
-<!--            $('#yesOption').attr('href', '/admin/categories/delete/' + id);-->
-<!--            $('#confirmationId').modal('show');-->
-<!--        }-->
-<!--    </script>-->
-<!--    &lt;!&ndash; Dialog &ndash;&gt;-->
-<!--    <div class="modal fade" id="confirmationId" tabindex="-1" role="dialog"-->
-<!--         aria-labelledby="modelTitleId" aria-hidden="true">-->
-<!--        <div class="modal-dialog" role="document">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title">Confirmation</h5>-->
-<!--                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                        <span aria-hidden="true">&times;</span>-->
-<!--                    </button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                    Do you want to delete "<span id="productName"></span>"?-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <a id="yesOption" type="button" class="btn btn-danger">Yes</a>-->
-<!--                    <button type="button" class="btn btn-secondary"-->
-<!--                            data-dismiss="modal">No</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+                                        <form th:action="'/reservation/confirm/' + ${reservation.id}"
+                                              onsubmit="return confirm('Do you really want to confirm this reservation');">
+
+                                            <input class="btn btn-danger" type="submit" value="Confirm">
+                                        </form>
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr class="info">
+                                <td colspan="7">
+                                    <table class="table mb-0 table-success table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Table Type</th>
+                                            <th scope="col">Number Of Table</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="detail : ${reservation.getReservationDetails()}">
+                                            <td th:text="${detail.table.tableTypes} +' seats'"></td>
+                                            <td th:text="${detail.numberOfTables}"></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </div>
+
+                    </div>
+                    </tbody>
+                </table>
+            </section>
+
+        </div>
+    </section>
+
+</div>
 
 
 </body>

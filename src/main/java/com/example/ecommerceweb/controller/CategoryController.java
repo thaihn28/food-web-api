@@ -1,16 +1,26 @@
 package com.example.ecommerceweb.controller;
 
+import com.example.ecommerceweb.dto.SearchObject;
 import com.example.ecommerceweb.model.Category;
 import com.example.ecommerceweb.model.Product;
+import com.example.ecommerceweb.model.Reservation;
+import com.example.ecommerceweb.repository.ReservationRepository;
 import com.example.ecommerceweb.service.CategoryService;
 import com.example.ecommerceweb.service.ProductService;
+import com.example.ecommerceweb.service.ReservationService;
 import com.example.ecommerceweb.service.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,10 +32,47 @@ public class CategoryController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    ReservationService reservationService;
+
+    @Autowired
+    ReservationRepository reservationRepository;
+
+
+
     @GetMapping(value = "/categories")
     public String viewAllCategory(Model model){
 //        List<Category> categoryList = categoryService.getAllCategory();
 //        model.addAttribute("categories", categoryList);
+        return "/category/categories";
+    }
+    @RequestMapping(value = "/categories")
+    public String getAllReservationByFilter(@ModelAttribute("searchObject") @Valid SearchObject searchObject,
+                                            BindingResult result,
+                                            Model model) throws ParseException {
+
+        if (searchObject == null) {
+            searchObject = new SearchObject();
+            searchObject.setStatus(false);
+            searchObject.setOrder("sendDESC");
+        }
+        SimpleDateFormat spm = new SimpleDateFormat("yyyy-MM-dd");
+        if (searchObject.getFromDate() != null && searchObject.getToDate() != null) {
+            if (!searchObject.getFromDate().isEmpty() && !searchObject.getToDate().isEmpty()) {
+                Date fromDate = spm.parse(searchObject.getFromDate());
+                Date toDate = spm.parse(searchObject.getToDate());
+                if (fromDate.after(toDate)) {
+                    result.rejectValue("fromDate", "fromDate.error", "Ngày bắt đầu không được lớn hơn ngày kết thúc");
+                }
+            }
+        }
+
+        List<Reservation> reservations = reservationService.findReservationByNameAndDateAndStatus(searchObject, 0, 0);
+
+        //session.setAttribute("reservations", reservations);
+        Collections.sort(reservations);
+        model.addAttribute("reservations", reservations);
+        model.addAttribute("searchObject", searchObject);
         return "/category/categories";
     }
 
