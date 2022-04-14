@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-//@RequestMapping("/admin")
+@RequestMapping(value = "/admin")
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
@@ -22,7 +22,7 @@ public class CategoryController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("/categories")
+    @GetMapping(value = "/categories")
     public String viewAllCategory(Model model){
         model.addAttribute("categories", categoryService.getAllCategory());
         return "/category/categories";

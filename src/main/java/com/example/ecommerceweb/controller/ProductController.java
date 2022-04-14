@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping(value = "/admin")
 public class ProductController {
     public static String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/productImages";
     @Autowired
@@ -35,7 +35,7 @@ public class ProductController {
 
     // Product sessions
 
-    @GetMapping("/products")
+    @GetMapping(value = "/products")
     public String getAllPages(Model model){
 //        model.addAttribute("products", productService.getAllProduct());
 //        return "/product/products";
