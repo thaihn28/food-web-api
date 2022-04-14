@@ -72,12 +72,12 @@
                                 Approve
                             </a>
                             <a class="btn btn-danger" th:href="@{/admin/carts/approve/{id}(id=${cart.id})}">Deny</a>
-<!--                            <a th:data-id="${cart.id}"-->
-<!--                               th:data-name="${cart.product.name}"-->
-<!--                               onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"-->
-<!--                               class="btn btn-warning" style="color: white">Delete-->
-<!--                            </a>-->
-                            <a href="" th:href="@{/admin/categories/delete/{id}(id=${cart.id})}" onclick="return confirm('Are you sure want to delete it?')" class="btn btn-danger">Delete</a>
+                            <a th:data-id="${cart.id}"
+                               th:data-name="${cart.product.name}"
+                               onclick="showConfirmModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
+                               class="btn btn-warning" style="color: white">Delete
+                            </a>
+<!--                            <a href="" th:href="@{/admin/categories/delete/{id}(id=${cart.id})}" onclick="return confirm('Are you sure want to delete it?')" class="btn btn-danger">Delete</a>-->
 
                         </td>
                     </tr>

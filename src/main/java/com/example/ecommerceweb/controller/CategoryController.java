@@ -24,7 +24,8 @@ public class CategoryController {
 
     @GetMapping(value = "/categories")
     public String viewAllCategory(Model model){
-        model.addAttribute("categories", categoryService.getAllCategory());
+//        List<Category> categoryList = categoryService.getAllCategory();
+//        model.addAttribute("categories", categoryList);
         return "/category/categories";
     }
 
