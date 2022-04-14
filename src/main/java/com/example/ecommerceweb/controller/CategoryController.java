@@ -40,11 +40,11 @@ public class CategoryController {
 
 
 
-    @GetMapping(value = "/categories")
+    @RequestMapping(value = "/categories-test")
     public String viewAllCategory(Model model){
 //        List<Category> categoryList = categoryService.getAllCategory();
 //        model.addAttribute("categories", categoryList);
-        return "/category/categories";
+        return "/category/index";
     }
     @RequestMapping(value = "/categories")
     public String getAllReservationByFilter(@ModelAttribute("searchObject") @Valid SearchObject searchObject,
