@@ -24,11 +24,6 @@ public class CategoryController {
     @Autowired
     ProductService productService;
 
-    @Autowired
-    ReservationService reservationService;
-
-    @Autowired
-    ReservationRepository reservationRepository;
 
     @RequestMapping(value = "/categories")
     public String viewAllCategory(Model model){
