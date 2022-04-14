@@ -31,7 +31,7 @@
                                 Add New Product
                             </a>
                         </div>
-                        <form th:action="@{'/admin/products/page/' + ${currentPage} + '/searchProduct'}" style="position: absolute; left: 60%">
+                        <form th:action="@{'/admin/products/page/' + ${currentPage} + '/searchProduct'}">
                             <div class="col-lg-3">
                                 <input type="text" th:value="${name}" name="name" class="form-control" placeholder="Enter product name...">
                             </div>
@@ -39,8 +39,6 @@
                                 <input type="submit" value="Search" class="btn-success form-control">
                             </div>
                         </form>
-
-
                         <!--                        Drop down end-->
                     </div>
 
