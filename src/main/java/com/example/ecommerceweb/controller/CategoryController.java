@@ -1,9 +1,7 @@
 package com.example.ecommerceweb.controller;
 
-import com.example.ecommerceweb.dto.SearchObject;
 import com.example.ecommerceweb.model.Category;
 import com.example.ecommerceweb.model.Product;
-import com.example.ecommerceweb.model.Reservation;
 import com.example.ecommerceweb.repository.ReservationRepository;
 import com.example.ecommerceweb.service.CategoryService;
 import com.example.ecommerceweb.service.ProductService;
@@ -12,15 +10,9 @@ import com.example.ecommerceweb.service.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -38,9 +30,7 @@ public class CategoryController {
     @Autowired
     ReservationRepository reservationRepository;
 
-
-
-    @RequestMapping(value = "/category")
+    @RequestMapping(value = "/categories")
     public String viewAllCategory(Model model){
         List<Category> categoryList = categoryService.getAllCategory();
         model.addAttribute("categories", categoryList);
