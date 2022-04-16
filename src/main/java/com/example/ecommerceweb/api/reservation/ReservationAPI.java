@@ -12,10 +12,7 @@ import com.example.ecommerceweb.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +31,7 @@ public class ReservationAPI {
     @Autowired
     ReservationDetailRepository reservationDetailRepository;
 
+    @CrossOrigin(origins = "https://sqafood.herokuapp.com")
     @PostMapping("/new-reservation")
     public ResponseEntity<ResponseObject> newRes(@RequestBody ReservationDTO resTemp) throws ParseException {
         Reservation res = new Reservation();

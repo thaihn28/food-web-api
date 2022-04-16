@@ -21,6 +21,7 @@ public class CartItemAPI {
     @Autowired
     ProductService productService;
 
+    @CrossOrigin(origins = "https://sqafood.herokuapp.com")
     @PostMapping("/carts/add")
     public CartItemDTO addCartItem(@RequestBody CartItemDTO cartItemDTO) throws UserNotFoundException {
             CartItem cartItem = new CartItem();

@@ -24,6 +24,7 @@ public class ProductAPI {
     @Autowired
     CategoryService categoryService;
 
+    @CrossOrigin(origins = "https://sqafood.herokuapp.com")
     @RequestMapping("/products")
     public ResponseEntity<Map<String, Object>> getAllProducts(
             @RequestParam(value = "order", required = false, defaultValue = "ASC") String order,
@@ -44,6 +45,7 @@ public class ProductAPI {
         }
     }
 
+    @CrossOrigin(origins = "https://sqafood.herokuapp.com")
     @RequestMapping("/product/{id}")
     public Product productById(@PathVariable("id") Long id) {
         try {
@@ -54,6 +56,7 @@ public class ProductAPI {
         }
     }
 
+    @CrossOrigin(origins = "https://sqafood.herokuapp.com")
     @RequestMapping("/category/{id}")
     public List<Product> productNameById(@PathVariable("id") int id) {
         return productService.getAllProductsByCategoryId(id);
