@@ -23,26 +23,34 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @SpringBootApplication
 @EnableWebSecurity
 
-public class ECommerceWebApplication extends WebSecurityConfigurerAdapter{
+public class ECommerceWebApplication {
     public static void main(String[] args) {
         SpringApplication.run(ECommerceWebApplication.class, args);
     }
 
-//
-
     @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("https://sqafood.herokuapp.com")
-                        .allowedMethods("*")
-                        .allowedHeaders("*")
-                        .allowCredentials(true)
-                ;
-            }
-        };
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("https://sqafood.herokuapp.com"));
+        configuration.setAllowedMethods(Arrays.asList("POST", "GET",  "PUT", "OPTIONS", "DELETE"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
+
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry.addMapping("/**")
+//                        .allowedOrigins("https://sqafood.herokuapp.com")
+//                        .allowedMethods("*")
+//                        .allowedHeaders("*")
+//                        .allowCredentials(true)
+//                ;
+//            }
+//        };
+//    }
 }
 
