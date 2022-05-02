@@ -5,6 +5,7 @@ package com.example.ecommerceweb.configuration;
 import com.example.ecommerceweb.service.UserService;
 import net.bytebuddy.ClassFileVersion;
 import org.apache.catalina.filters.CorsFilter;
+import org.hibernate.annotations.Immutable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -51,12 +52,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("**/detail/**").hasAuthority("ROLE_USER")
-//                .antMatchers("**/delete/**", "**/edit/**", "**/update/**","**/registrationAdmin/**").hasAuthority("ROLE_ADMIN")
+        http.cors().and()
+        .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("**/detail/**").hasAuthority("ROLE_USER")
+                .antMatchers("**/delete/**", "**/edit/**", "**/update/**","**/registrationAdmin/**").hasAuthority("ROLE_ADMIN")
 //                .anyRequest().authenticated()
-        http.cors()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -79,13 +80,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/css/**",
                 "/img/**");
     }
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+////        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080/api/category/1", "https://sqafood.herokuapp.com"));
+//        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
+//        configuration.setAllowCredentials(true);
+//        // setAllowedHeaders is important! Without it, OPTIONS preflight request
+//        // will fail with 403 Invalid CORS request
+//        configuration.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "responseType", "Authorization"));
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 }

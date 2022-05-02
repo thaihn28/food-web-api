@@ -19,8 +19,8 @@ public class CartItemDTO {
     private Long productId;
     private int quantity;
     private double total;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+7")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+7")
     private Date date;
     private boolean isApprove;
 

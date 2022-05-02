@@ -18,7 +18,7 @@ public class CartItem {
     @NotNull
     private String username;
     @NotNull
-    @Column(length = 10)
+    @Column(length = 50)
     private String phoneNo;
     @NotNull
     private String address;
@@ -31,8 +31,8 @@ public class CartItem {
     @NotNull
     private double total;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+7")
+//    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm", timezone = "GMT+7")
     private Date date;
     @NotNull
     private boolean isApprove;
